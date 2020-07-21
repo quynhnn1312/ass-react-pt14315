@@ -5,10 +5,17 @@ const categoryApi = {
     const url = `/categories`;
     return axiosClient.get(url);
   },
-
-  get: (id) => {
+  post: (requestCategory) => {
+    const url = `/categories`;
+    return axiosClient.post(url, requestCategory);
+  },
+  delete: (id) => {
     const url = `/categories/${id}`;
-    return axiosClient.get(url);
+    return axiosClient.delete(url);
+  },
+  put: (id, requestCategory) => {
+    const url = `/categories/${id}`;
+    return axiosClient.put(url, requestCategory);
   },
 };
 

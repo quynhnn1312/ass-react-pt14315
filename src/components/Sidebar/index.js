@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
-import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
 
 function Sidebar(props) {
@@ -35,13 +34,13 @@ function Sidebar(props) {
       {/* Heading */}
       <div className="sidebar-heading">Addons</div>
       <li className="nav-item">
-        <NavLink className="nav-link" to="/product">
+        <NavLink className="nav-link" to="/products">
           <i className="fas fa-fw fa-peace"></i>
           <span>Product</span>
         </NavLink>
       </li>
       <li className="nav-item">
-        <NavLink className="nav-link" to="/category">
+        <NavLink className="nav-link" to="/categories">
           <i className="fas fa-fw fa-bars"></i>
           <span>Category</span>
         </NavLink>

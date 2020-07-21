@@ -1,15 +1,30 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import { useDispatch, useSelector } from "react-redux";
-import { apiProductList, selectProduct } from "../../productSlice";
+import Swal from "sweetalert2/dist/sweetalert2.js";
 
 function ProductList(props) {
-  const dispatch = useDispatch();
-  const products = useSelector(selectProduct);
-  useEffect(() => {
-    dispatch(apiProductList());
-  }, []);
+  const { onProductRemoveClick, products, onProductUpdateClick } = props;
+  const onRemoveClick = (product) => {
+    Swal.fire({
+      title: "Chắc chắn xóa product?",
+      text: "Sau khi xóa sẽ không lấy lại dữ liệu được!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Đồng ý!",
+      cancelButtonText: "Không đồng ý!",
+    }).then((result) => {
+      if (result.value) {
+        if (!onProductRemoveClick) return;
+        onProductRemoveClick(product);
+      }
+    });
+  };
+  const onUpdateClick = (product) => {
+    onProductUpdateClick(product);
+  };
   return (
     <table
       className="table table-bordered"
@@ -20,9 +35,10 @@ function ProductList(props) {
       <thead>
         <tr>
           <th>ID</th>
-          <th>Name</th>
+          <th>Information</th>
           <th>Image</th>
           <th>Price</th>
+          <th>Status</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -30,7 +46,20 @@ function ProductList(props) {
         {products.map((product, index) => (
           <tr key={index}>
             <td>{product.id}</td>
-            <td>{product.name}</td>
+            <td className="text-left">
+              <li>
+                <strong>Name: </strong>
+                {product.name}
+              </li>
+              <li>
+                <strong>Amount: </strong>
+                {product.amount}
+              </li>
+              <li>
+                <strong>Short Description: </strong>
+                {product.short_description}
+              </li>
+            </td>
             <td>
               <img
                 src={product.avatar}
@@ -39,15 +68,33 @@ function ProductList(props) {
                 width="150px"
               />
             </td>
-            <td>{product.price}$</td>
             <td>
-              <a className="btn btn-info" href="">
+              <del>{product.price} $</del>
+              <p>{((100 - product.discount) / 100) * product.price} $</p>
+            </td>
+            <td>
+              <span
+                className={
+                  product.status ? "badge badge-success" : "badge badge-danger"
+                }
+              >
+                {product.status ? "active" : "private"}
+              </span>
+            </td>
+            <td>
+              <button
+                className="btn btn-info"
+                onClick={() => onUpdateClick(product)}
+              >
                 Edit
-              </a>{" "}
+              </button>{" "}
               &nbsp;
-              <a className="btn btn-danger" href="">
+              <button
+                className="btn btn-danger"
+                onClick={() => onRemoveClick(product)}
+              >
                 Remove
-              </a>
+              </button>
             </td>
           </tr>
         ))}
@@ -56,6 +103,14 @@ function ProductList(props) {
   );
 }
 
-ProductList.propTypes = {};
+ProductList.propTypes = {
+  onProductRemoveClick: PropTypes.func,
+  products: PropTypes.array,
+};
+
+ProductList.defaultProps = {
+  onProductRemoveClick: null,
+  products: [],
+};
 
 export default ProductList;

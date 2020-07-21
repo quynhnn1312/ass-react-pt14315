@@ -1,10 +1,9 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
-import PropTypes from "prop-types";
-import { useRouteMatch, Switch, Route } from "react-router-dom";
-import Main from "./pages/Main";
-import AddEdit from "./pages/AddEdit";
+import { Route, Switch, useRouteMatch } from "react-router-dom";
 import NotFound from "./../../components/NotFound";
+import AddEdit from "./pages/AddEdit";
+import Main from "./pages/Main";
 
 function Category(props) {
   const match = useRouteMatch();
