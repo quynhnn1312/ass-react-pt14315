@@ -1,15 +1,31 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { useDispatch, useSelector } from "react-redux";
-import { apiCategoryList, selectCategory } from "../../categorySlice";
+import React from "react";
+import Swal from "sweetalert2/dist/sweetalert2.js";
 
 function CategoryList(props) {
-  const dispatch = useDispatch();
-  const categories = useSelector(selectCategory);
-  useEffect(() => {
-    dispatch(apiCategoryList());
-  }, []);
+  const { categories, onCategoryRemoveClick, onCategoryUpdateClick } = props;
+  const onHandleRemove = (category) => {
+    Swal.fire({
+      title: "Chắc chắn xóa category?",
+      text: "Sau khi xóa sẽ không lấy lại dữ liệu được!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Đồng ý!",
+      cancelButtonText: "Không đồng ý!",
+    }).then((result) => {
+      if (result.value) {
+        if (!onCategoryRemoveClick) return;
+        onCategoryRemoveClick(category);
+      }
+    });
+  };
+  const onUpdateClick = (category) => {
+    if (!onCategoryUpdateClick) return;
+    onCategoryUpdateClick(category);
+  };
   return (
     <table
       className="table table-bordered"
@@ -40,13 +56,19 @@ function CategoryList(props) {
               </span>
             </td>
             <td>
-              <a className="btn btn-info" href="">
+              <button
+                className="btn btn-info"
+                onClick={() => onUpdateClick(category)}
+              >
                 Edit
-              </a>{" "}
+              </button>{" "}
               &nbsp;
-              <a className="btn btn-danger" href="">
+              <button
+                className="btn btn-danger"
+                onClick={() => onHandleRemove(category)}
+              >
                 Remove
-              </a>
+              </button>
             </td>
           </tr>
         ))}
@@ -55,6 +77,16 @@ function CategoryList(props) {
   );
 }
 
-CategoryList.propTypes = {};
+CategoryList.propTypes = {
+  categories: PropTypes.array,
+  onCategoryRemoveClick: PropTypes.func,
+  onCategoryUpdateClick: PropTypes.func,
+};
+
+CategoryList.defaultProps = {
+  categories: [],
+  onCategoryRemoveClick: null,
+  onCategoryUpdateClick: null,
+};
 
 export default CategoryList;

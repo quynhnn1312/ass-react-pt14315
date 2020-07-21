@@ -1,21 +1,27 @@
-import React from "react";
 import PropTypes from "prop-types";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
 CategoryForm.propTypes = {
   onHandleSubmit: PropTypes.func,
+  initialValuesEdit: PropTypes.object,
 };
 
 CategoryForm.defaultProps = {
   onHandleSubmit: null,
+  initialValuesEdit: {},
 };
 
-function CategoryForm({ onHandleSubmit }) {
+function CategoryForm(props) {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { register, handleSubmit, errors } = useForm();
+  const { onHandleSubmit, initialValuesEdit, isAddMode } = props;
   const onSubmit = (data) => {
+    setIsSubmitting(true);
     if (!onHandleSubmit) return;
     onHandleSubmit(data);
   };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="card-body">
@@ -31,6 +37,7 @@ function CategoryForm({ onHandleSubmit }) {
                 name="name"
                 placeholder="Enter name ..."
                 ref={register({ required: true })}
+                defaultValue={initialValuesEdit.name}
               />
               {errors.name && errors.name.type === "required" && (
                 <p className="error-form">
@@ -45,9 +52,14 @@ function CategoryForm({ onHandleSubmit }) {
                   className="form-check-input"
                   type="checkbox"
                   id="gridCheck"
+                  name="status"
+                  ref={register}
+                  defaultChecked={
+                    initialValuesEdit.status === true ? true : false
+                  }
                 />
                 <label className="form-check-label" htmlFor="gridCheck">
-                  Show
+                  Show category
                 </label>
               </div>
             </div>
@@ -56,7 +68,16 @@ function CategoryForm({ onHandleSubmit }) {
       </div>
       <div className="card-footer">
         <button type="submit" className="btn btn-primary">
-          Add Category
+          {isSubmitting ? (
+            <span
+              className="spinner-border spinner-border-sm"
+              role="status"
+              aria-hidden="true"
+            />
+          ) : (
+            ""
+          )}
+          {isAddMode ? "Add" : "Update"}Category
         </button>{" "}
         <button type="reset" className="btn btn-danger">
           Reset

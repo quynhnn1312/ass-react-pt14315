@@ -2,17 +2,18 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Suspense } from "react";
-import "./App.css";
-import Sidebar from "./components/Sidebar/index";
-import Header from "./components/Header/index";
-import Footer from "./components/Footer/index";
-import NotFound from "./components/NotFound/index";
 import {
   BrowserRouter as Router,
+  Redirect,
   Route,
   Switch,
-  Redirect,
 } from "react-router-dom";
+import "./App.css";
+import ButtonScroll from "./components/ButtonScroll";
+import Footer from "./components/Footer/index";
+import Header from "./components/Header/index";
+import NotFound from "./components/NotFound/index";
+import Sidebar from "./components/Sidebar/index";
 
 const Dashboard = React.lazy(() => import("./features/Dashboard"));
 const Product = React.lazy(() => import("./features/Product"));
@@ -44,17 +45,15 @@ function App() {
                   <Redirect exact from="/" to="/dashboard" />
 
                   <Route path="/dashboard" component={Dashboard} />
-                  <Route path="/product" component={Product} />
-                  <Route path="/category" component={Category} />
+                  <Route path="/products" component={Product} />
+                  <Route path="/categories" component={Category} />
                   <Route component={NotFound} />
                 </Switch>
               </div>
               <Footer />
             </div>
           </div>
-          <a className="scroll-to-top rounded" href="#page-top">
-            <i className="fas fa-angle-up" />
-          </a>
+          <ButtonScroll />
         </Router>
       </Suspense>
     </div>

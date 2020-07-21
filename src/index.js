@@ -5,6 +5,7 @@ import store from "../src/app/store";
 import App from "./App";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
+import "sweetalert2/src/sweetalert2.scss";
 // import "bootstrap/dist/css/bootstrap.min.css";
 
 ReactDOM.render(
