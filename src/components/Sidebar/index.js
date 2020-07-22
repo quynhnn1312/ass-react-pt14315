@@ -1,8 +1,23 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { Link, useRouteMatch } from "react-router-dom";
 
+function OldSchoolMenuLink({ label, to, activeOnlyWhenExact, icon }) {
+  let match = useRouteMatch({
+    path: to,
+    exact: activeOnlyWhenExact,
+  });
+
+  return (
+    <li className={match ? "nav-item active" : "nav-item"}>
+      <Link className="nav-link" to={to}>
+        <i className={icon} />
+        <span>{label}</span>
+      </Link>
+    </li>
+  );
+}
 function Sidebar(props) {
   return (
     <ul
@@ -22,29 +37,28 @@ function Sidebar(props) {
       </a>
       {/* Divider */}
       <hr className="sidebar-divider my-0" />
-      {/* Nav Item - Dashboard */}
-      <li className="nav-item active">
-        <NavLink className="nav-link" to="/dashboard">
-          <i className="fas fa-fw fa-tachometer-alt" />
-          <span>Dashboard</span>
-        </NavLink>
-      </li>
+      <OldSchoolMenuLink
+        activeOnlyWhenExact={true}
+        to="/dashboard"
+        label="Dashboard"
+        icon="fas fa-fw fa-tachometer-alt"
+      />
       {/* Divider */}
       <hr className="sidebar-divider" />
       {/* Heading */}
       <div className="sidebar-heading">Addons</div>
-      <li className="nav-item">
-        <NavLink className="nav-link" to="/products">
-          <i className="fas fa-fw fa-peace"></i>
-          <span>Product</span>
-        </NavLink>
-      </li>
-      <li className="nav-item">
-        <NavLink className="nav-link" to="/categories">
-          <i className="fas fa-fw fa-bars"></i>
-          <span>Category</span>
-        </NavLink>
-      </li>
+      <OldSchoolMenuLink
+        activeOnlyWhenExact={true}
+        to="/products"
+        label="Product"
+        icon="fas fa-fw fa-peace"
+      />
+      <OldSchoolMenuLink
+        activeOnlyWhenExact={true}
+        to="/categories"
+        label="Category"
+        icon="fas fa-fw fa-bars"
+      />
       <hr className="sidebar-divider d-none d-md-block" />
       <div className="text-center d-none d-md-inline">
         <button className="rounded-circle border-0" id="sidebarToggle" />
