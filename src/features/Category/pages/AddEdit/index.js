@@ -21,7 +21,6 @@ function AddEdit(props) {
     if (isAddMode) {
       dispatch(apiAddCategory(value));
     } else {
-      console.log(value);
       value.id = categoryId;
       dispatch(apiUpdateCategory(value));
     }
