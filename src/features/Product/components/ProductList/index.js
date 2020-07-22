@@ -4,7 +4,12 @@ import PropTypes from "prop-types";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 
 function ProductList(props) {
-  const { onProductRemoveClick, products, onProductUpdateClick } = props;
+  const {
+    onProductRemoveClick,
+    products,
+    onProductUpdateClick,
+    categories,
+  } = props;
   const onRemoveClick = (product) => {
     Swal.fire({
       title: "Chắc chắn xóa product?",
@@ -36,6 +41,7 @@ function ProductList(props) {
         <tr>
           <th>ID</th>
           <th>Information</th>
+          <th>Category</th>
           <th>Image</th>
           <th>Price</th>
           <th>Status</th>
@@ -59,6 +65,13 @@ function ProductList(props) {
                 <strong>Short Description: </strong>
                 {product.short_description}
               </li>
+            </td>
+            <td>
+              {categories.map((category) => {
+                if (category.id === product.categoryId) {
+                  return category.name;
+                }
+              })}
             </td>
             <td>
               <img
