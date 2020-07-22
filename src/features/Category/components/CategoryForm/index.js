@@ -1,6 +1,8 @@
 import PropTypes from "prop-types";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { selectCategory, apiCategoryList } from "../../categorySlice";
 
 CategoryForm.propTypes = {
   onHandleSubmit: PropTypes.func,
@@ -13,15 +15,29 @@ CategoryForm.defaultProps = {
 };
 
 function CategoryForm(props) {
+  const dispatch = useDispatch();
+  const categories = useSelector(selectCategory);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { register, handleSubmit, errors } = useForm();
   const { onHandleSubmit, initialValuesEdit, isAddMode } = props;
+  useEffect(() => {
+    dispatch(apiCategoryList());
+  }, []);
   const onSubmit = (data) => {
     setIsSubmitting(true);
     if (!onHandleSubmit) return;
     onHandleSubmit(data);
   };
-
+  const isCheckName = (name) => {
+    const checkName = categories.filter((category) => {
+      if (!isAddMode && category.name !== initialValuesEdit.name) {
+        return category.name.toLowerCase() == name.toLowerCase();
+      }
+      if (isAddMode) return category.name.toLowerCase() == name.toLowerCase();
+    });
+    if (checkName.length > 0) return false;
+    return true;
+  };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="card-body">
@@ -36,13 +52,19 @@ function CategoryForm(props) {
                 }
                 name="name"
                 placeholder="Enter name ..."
-                ref={register({ required: true })}
+                ref={register({ required: true, validate: isCheckName })}
                 defaultValue={initialValuesEdit.name}
               />
               {errors.name && errors.name.type === "required" && (
                 <p className="error-form">
                   <i className="fas fa-exclamation-triangle"></i>&nbsp; Name is
                   required
+                </p>
+              )}
+              {errors.name && errors.name.type === "validate" && (
+                <p className="error-form">
+                  <i className="fas fa-exclamation-triangle"></i>&nbsp;
+                  Duplicate category name
                 </p>
               )}
             </div>

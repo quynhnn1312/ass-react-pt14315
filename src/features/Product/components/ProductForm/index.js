@@ -1,6 +1,8 @@
 import PropTypes from "prop-types";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { selectProduct, apiProductList } from "../../productSlice";
 
 ProductForm.propTypes = {
   onHandleSubmit: PropTypes.func,
@@ -15,10 +17,15 @@ ProductForm.defaultProps = {
 };
 
 function ProductForm(props) {
+  const dispatch = useDispatch();
+  const products = useSelector(selectProduct);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [value, setValue] = useState();
   const { onHandleSubmit, categories, isAddMode, initialValuesEdit } = props;
   const { register, handleSubmit, errors } = useForm();
+  useEffect(() => {
+    dispatch(apiProductList());
+  }, []);
   const loadImage = (e) => {
     let output = document.getElementById("output");
     output.src = e.target.value;
@@ -32,6 +39,22 @@ function ProductForm(props) {
 
   const handleOnChange = (e) => {
     setValue({ categoryId: e.target.value });
+  };
+  const isCheckName = (name) => {
+    const checkName = products.filter((product) => {
+      if (!isAddMode && product.name !== initialValuesEdit.name) {
+        return product.name.toLowerCase() == name.toLowerCase();
+      }
+      if (isAddMode) return product.name.toLowerCase() == name.toLowerCase();
+    });
+    if (checkName.length > 0) return false;
+    return true;
+  };
+  const isCheckImage = (avatar) => {
+    if (/\.(gif|jpe?g|tiff|png|webp|bmp)$/i.test(avatar)) {
+      return true;
+    }
+    return false;
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -47,13 +70,19 @@ function ProductForm(props) {
                 }
                 name="name"
                 placeholder="Enter name ..."
-                ref={register({ required: true })}
+                ref={register({ required: true, validate: isCheckName })}
                 defaultValue={initialValuesEdit.name}
               />
               {errors.name && errors.name.type === "required" && (
                 <p className="error-form">
                   <i className="fas fa-exclamation-triangle"></i>&nbsp; Name is
                   required
+                </p>
+              )}
+              {errors.name && errors.name.type === "validate" && (
+                <p className="error-form">
+                  <i className="fas fa-exclamation-triangle"></i>&nbsp;
+                  Duplicate product name
                 </p>
               )}
             </div>
@@ -66,7 +95,7 @@ function ProductForm(props) {
                 }
                 name="price"
                 placeholder="Enter price ..."
-                ref={register({ required: true })}
+                ref={register({ required: true, min: 1 })}
                 defaultValue={initialValuesEdit.price}
               />
               {errors.price && errors.price.type === "required" && (
@@ -75,17 +104,40 @@ function ProductForm(props) {
                   required
                 </p>
               )}
+              {errors.price && errors.price.type === "min" && (
+                <p className="error-form">
+                  <i className="fas fa-exclamation-triangle"></i>&nbsp; Your
+                  price must be at least 1
+                </p>
+              )}
             </div>
             <div className="form-group">
               <label htmlFor="discount">% Discount:</label>
               <input
                 type="number"
-                className="form-control"
+                className={
+                  errors.discount ? "form-control is-invalid" : "form-control"
+                }
                 name="discount"
                 placeholder="Enter discount ..."
-                ref={register}
+                ref={register({
+                  min: 1,
+                  max: 100,
+                })}
                 defaultValue={initialValuesEdit.discount}
               />
+              {errors.discount && errors.discount.type === "min" && (
+                <p className="error-form">
+                  <i className="fas fa-exclamation-triangle"></i>&nbsp; Your
+                  discount must be at least 1
+                </p>
+              )}
+              {errors.discount && errors.discount.type === "max" && (
+                <p className="error-form">
+                  <i className="fas fa-exclamation-triangle"></i>&nbsp; Your
+                  discount must be no more than 100
+                </p>
+              )}
             </div>
             <div className="form-group">
               <label htmlFor="amount">Amount:</label>
@@ -96,13 +148,19 @@ function ProductForm(props) {
                 }
                 name="amount"
                 placeholder="Enter amount ..."
-                ref={register({ required: true })}
+                ref={register({ required: true, min: 1 })}
                 defaultValue={initialValuesEdit.amount}
               />
               {errors.amount && errors.amount.type === "required" && (
                 <p className="error-form">
                   <i className="fas fa-exclamation-triangle"></i>&nbsp; Amount
                   is required
+                </p>
+              )}
+              {errors.amount && errors.amount.type === "min" && (
+                <p className="error-form">
+                  <i className="fas fa-exclamation-triangle"></i>&nbsp; Your
+                  Amount must be at least 1
                 </p>
               )}
             </div>
@@ -151,19 +209,25 @@ function ProductForm(props) {
               <input
                 type="text"
                 className={
-                  errors.image ? "form-control is-invalid" : "form-control"
+                  errors.avatar ? "form-control is-invalid" : "form-control"
                 }
                 name="avatar"
                 placeholder="Enter image ..."
                 id="input"
                 onChange={loadImage}
-                ref={register({ required: true })}
+                ref={register({ required: true, validate: isCheckImage })}
                 defaultValue={initialValuesEdit.avatar}
               />
-              {errors.image && errors.image.type === "required" && (
+              {errors.avatar && errors.avatar.type === "required" && (
                 <p className="error-form">
                   <i className="fas fa-exclamation-triangle"></i>&nbsp; Image is
                   required
+                </p>
+              )}
+              {errors.avatar && errors.avatar.type === "validate" && (
+                <p className="error-form">
+                  <i className="fas fa-exclamation-triangle"></i>&nbsp; The
+                  image path is malformed
                 </p>
               )}
             </div>
@@ -171,7 +235,7 @@ function ProductForm(props) {
               <label htmlFor="category_id">Category:</label>
               <select
                 className={
-                  errors.amount ? "form-control is-invalid" : "form-control"
+                  errors.categoryId ? "form-control is-invalid" : "form-control"
                 }
                 name="categoryId"
                 ref={register({ required: true })}
@@ -185,7 +249,7 @@ function ProductForm(props) {
                   </option>
                 ))}
               </select>
-              {errors.category_id && errors.category_id.type === "required" && (
+              {errors.categoryId && errors.categoryId.type === "required" && (
                 <p className="error-form">
                   <i className="fas fa-exclamation-triangle"></i>&nbsp; Category
                   is required
