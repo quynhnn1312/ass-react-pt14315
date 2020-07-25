@@ -9,15 +9,18 @@ import {
   Switch,
 } from "react-router-dom";
 import "./App.css";
-import ButtonScroll from "./components/ButtonScroll";
-import Footer from "./components/Footer/index";
-import Header from "./components/Header/index";
-import NotFound from "./components/NotFound/index";
-import Sidebar from "./components/Sidebar/index";
+import LayoutMain from "./features/layouts/LayoutMain";
+import LayoutAdmin from "./features/layouts/LayoutAdmin";
+import NotFound from "./components/Admin/NotFound/index";
 
-const Dashboard = React.lazy(() => import("./features/Dashboard"));
-const Product = React.lazy(() => import("./features/Product"));
-const Category = React.lazy(() => import("./features/Category"));
+// Admin
+const Dashboard = React.lazy(() => import("./features/views/Admin/Dashboard"));
+const Product = React.lazy(() => import("./features/views/Admin/Product"));
+const Category = React.lazy(() => import("./features/views/Admin/Category"));
+
+// Main
+const Home = React.lazy(() => import("./features/views/Main/Home"));
+const Shop = React.lazy(() => import("./features/views/Main/Shop"));
 
 function App() {
   return (
@@ -36,24 +39,29 @@ function App() {
         }
       >
         <Router>
-          <div id="wrapper">
-            <Sidebar />
-            <div id="content-wrapper" className="d-flex flex-column">
-              <div id="content">
-                <Header />
+          <Switch>
+            <Route path="/admin/:path?">
+              <LayoutAdmin>
                 <Switch>
-                  <Redirect exact from="/" to="/dashboard" />
+                  <Redirect exact from="/admin/" to="/admin/dashboard" />
 
-                  <Route path="/dashboard" component={Dashboard} />
-                  <Route path="/products" component={Product} />
-                  <Route path="/categories" component={Category} />
+                  <Route path="/admin/dashboard" component={Dashboard} />
+                  <Route path="/admin/products" component={Product} />
+                  <Route path="/admin/categories" component={Category} />
                   <Route component={NotFound} />
                 </Switch>
-              </div>
-              <Footer />
-            </div>
-          </div>
-          <ButtonScroll />
+              </LayoutAdmin>
+            </Route>
+            <Route>
+              <LayoutMain>
+                <Switch>
+                  <Route path="/" exact component={Home} />
+                  <Route path="/shops" component={Shop} />
+                  <Route component={NotFound} />
+                </Switch>
+              </LayoutMain>
+            </Route>
+          </Switch>
         </Router>
       </Suspense>
     </div>
