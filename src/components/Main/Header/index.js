@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
 import PropTypes from "prop-types";
+import {NavLink, Link} from "react-router-dom";
 
 function Header(props) {
   return (
@@ -112,12 +113,12 @@ function Header(props) {
                           </h4>
                         </div>
                         <div className="shopping-cart-btn">
-                          <a className="default-btn" href="/">
+                          <Link className="default-btn" to="/carts">
                             view cart
-                          </a>
-                          <a className="default-btn" href="/">
+                          </Link>
+                          <Link className="default-btn" to="/checkout">
                             checkout
-                          </a>
+                          </Link>
                         </div>
                       </div>
                     </div>
@@ -132,19 +133,16 @@ function Header(props) {
                       <div className="dropdown-menu">
                         <ul>
                           <li>
-                            <a href="/">Register</a>
+                            <Link to="/register">Register</Link>
                           </li>
                           <li>
-                            <a href="/">Login</a>
+                            <Link to="/login">Login</Link>
                           </li>
                           <li>
-                            <a href="/">My Account</a>
+                            <Link to="/">My Account</Link>
                           </li>
                           <li>
-                            <a href="/">Wishlist</a>
-                          </li>
-                          <li>
-                            <a href="checkout.html">Checkout</a>
+                            <Link to="checkout">Checkout</Link>
                           </li>
                         </ul>
                       </div>
@@ -165,15 +163,23 @@ function Header(props) {
           <nav id="main_nav" className="stellarnav">
             <ul className="mb-0">
               <li>
-                <a href="index.html">
-                  <span>Home</span>
-                </a>
+                <NavLink
+                    exact
+                    to="/"
+                    activeClassName="header__link--active"
+                  >
+                    Home
+                </NavLink>
               </li>
               <li>
-                <a href="/">
-                  <span>Shop</span>   &nbsp;
+                <NavLink
+                    exact
+                    to="/shops"
+                    activeClassName="header__link--active"
+                  >
+                    Shop &nbsp;
                   <i className="fa fa-angle-down"></i>
-                </a>
+                </NavLink>
                 <ul>
                   <li>
                     <a href="/">FAQs Page</a>
@@ -184,19 +190,31 @@ function Header(props) {
                 </ul>
               </li>
               <li>
-                <a href="/">
-                  <span>Blog</span>
-                </a>
+                <NavLink
+                    exact
+                    to="/blogs"
+                    activeClassName="header__link--active"
+                  >
+                    Blog
+                </NavLink>
               </li>
               <li>
-                <a href="/">
-                  <span>About Us</span>
-                </a>
+                <NavLink
+                    exact
+                    to="/about"
+                    activeClassName="header__link--active"
+                  >
+                    About Us
+                </NavLink>
               </li>
               <li>
-                <a href="/">
-                  <span>Contact Us</span>
-                </a>
+                <NavLink
+                    exact
+                    to="/contact"
+                    activeClassName="header__link--active"
+                  >
+                    Contact Us
+                </NavLink>
               </li>
             </ul>
           </nav>

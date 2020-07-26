@@ -10,6 +10,7 @@ import "../../assets/main/css/style.scss";
 import "../../assets/main/css/responsive.css";
 import Header from "../../components/Main/Header";
 import Footer from "../../components/Main/Footer";
+import ButtonScroll from "../../components/Main/ButtonScroll";
 
 export default ({ children }) => {
   return (
@@ -17,13 +18,9 @@ export default ({ children }) => {
       <div id="whole" className="whole-site-wrapper">
         <Header />
         <div className="fixed-header-space" />{" "}
-        {/* empty placeholder div for Fixed Menu bar height*/}
         { children }
         <Footer />
-        <div id="to_top">
-          <i className="ion ion-ios-arrow-forward" />
-          <i className="ion ion-ios-arrow-forward" />
-        </div>
+        <ButtonScroll/>
       </div>
     </div>
   );

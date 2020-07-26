@@ -7263,4 +7263,31 @@ header.header-type-4 .header-text span:first-child {
 .stellarnav>ul>li:nth-child(2):hover ul{
     display:block !important;
 }
+.button-scroll{
+    display: none;
+    position: fixed;
+    bottom: 25px;
+    right: 140px;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    cursor: pointer;
+    -webkit-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+    font-weight: 700;
+    text-transform: uppercase;
+    z-index: 999;
+    background: #cc2121;
+    text-shadow: none;
+    color: #fff;
+    border-radius: 50%;
+}
+.button-scroll:hover{
+    background: #000;
+}
+.header__link--active{
+    color: #cc2121 !important;
+}
 }
