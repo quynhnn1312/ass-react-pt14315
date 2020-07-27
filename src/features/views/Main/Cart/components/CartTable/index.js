@@ -3,6 +3,17 @@ import React from "react";
 import PropTypes from "prop-types";
 
 function CartTable(props) {
+  const qtyMinus = (e) => {
+    var qty_value = e.target.parentElement.parentElement.firstElementChild.value;
+    if(qty_value > 1){
+      e.target.parentElement.parentElement.firstElementChild.value = qty_value - 1;
+    }
+  }
+
+  const qtyPlus = (e) => {
+    var qty_value = e.target.parentElement.parentElement.firstElementChild.value;
+    e.target.parentElement.parentElement.firstElementChild.value = +qty_value + 1;
+  }
   return (
     <form action="#">
       <div className="table-responsive">
@@ -43,17 +54,12 @@ function CartTable(props) {
                       className="cart-input-box"
                       type="text"
                       defaultValue={3}
+                      id="qty_value"
                     />
-                    <div className="dec qtybutton">
+                    <div className="dec qtybutton" onClick={qtyMinus}>
                       <i className="fa fa-angle-down" />
                     </div>
-                    <div className="inc qtybutton">
-                      <i className="fa fa-angle-up" />
-                    </div>
-                    <div className="dec qtybutton">
-                      <i className="fa fa-angle-down" />
-                    </div>
-                    <div className="inc qtybutton">
+                    <div className="inc qtybutton" onClick={qtyPlus}>
                       <i className="fa fa-angle-up" />
                     </div>
                   </div>

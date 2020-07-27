@@ -83,7 +83,7 @@ function ProductList(props) {
             </td>
             <td>
               <del>{product.price} $</del>
-              <p>{((100 - product.discount) / 100) * product.price} $</p>
+              <p>{Math.ceil(((100 - product.discount) / 100) * product.price)} $</p>
             </td>
             <td>
               <span
