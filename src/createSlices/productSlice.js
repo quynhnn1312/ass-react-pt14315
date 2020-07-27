@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import categoryApi from "../../../../api/categoryApi";
-import productApi from "../../../../api/productApi";
+import categoryApi from "../api/categoryApi";
+import productApi from "../api/productApi";
 
 export const apiProductList = createAsyncThunk(
   "products/fetchProductsStatus",
@@ -14,6 +14,17 @@ export const apiProductList = createAsyncThunk(
         })
       );
       return [].concat(...responseProductList);
+    } catch (error) {
+      console.log("Failed to fetch product list: ", error);
+    }
+  }
+);
+export const apiProductByCategory = createAsyncThunk(
+  "products/fetchProductByCategoryStatus",
+  async (id) => {
+    try {
+      const responseProductByCategory = await  productApi.getAll(id);
+      return responseProductByCategory;
     } catch (error) {
       console.log("Failed to fetch product list: ", error);
     }
@@ -69,6 +80,9 @@ const product = createSlice({
   reducers: {},
   extraReducers: {
     [apiProductList.fulfilled]: (state, action) => {
+      return action.payload;
+    },
+    [apiProductByCategory.fulfilled]: (state, action) => {
       return action.payload;
     },
     [apiAddProduct.fulfilled]: (state, action) => {

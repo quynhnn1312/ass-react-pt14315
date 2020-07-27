@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { selectProduct, apiProductList } from "../../productSlice";
+import { selectProduct, apiProductList } from "../../../../../../createSlices/productSlice";
 
 ProductForm.propTypes = {
   onHandleSubmit: PropTypes.func,

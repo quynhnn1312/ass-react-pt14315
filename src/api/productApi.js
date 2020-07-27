@@ -5,6 +5,10 @@ const productApi = {
     const url = `/categories/${cateId}/products`;
     return axiosClient.get(url);
   },
+  get: (cateId, proId) => {
+    const url = `/categories/${cateId}/products/${proId}`;
+    return axiosClient.get(url);
+  },
   post: (cateId, requestProduct) => {
     const url = `/categories/${cateId}/products`;
     return axiosClient.post(url, requestProduct);

@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
-import productReducer from "../features/views/Admin/Product/productSlice";
-import categoryReducer from "../features/views/Admin/Category/categorySlice";
+import productReducer from "../createSlices/productSlice";
+import categoryReducer from "../createSlices/categorySlice";
 
 const rootReducer = {
   products: productReducer,

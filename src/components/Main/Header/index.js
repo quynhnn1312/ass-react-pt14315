@@ -1,9 +1,28 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import {NavLink, Link} from "react-router-dom";
-
+import { useDispatch, useSelector } from "react-redux";
+import {
+  apiCategoryList,
+  selectCategory,
+} from "../../../createSlices/categorySlice";
 function Header(props) {
+  const dispatch = useDispatch();
+  const categories = useSelector(selectCategory);
+  useEffect(() => {
+    dispatch(apiCategoryList());
+  }, []);
+  const showCart = () => {
+    var element = document.getElementById("cart-small-header");
+    element.classList.contains("open") ? element.classList.remove("open") : element.classList.add("open");
+  }
+
+  const showSetting = () => {
+    var element = document.getElementById("setting-small-header");
+    element.classList.contains("open") ? element.classList.remove("open") : element.classList.add("open");
+  }
+
   return (
     <header className="header bgc-white header-type-1">
       <div className="header-area">
@@ -40,13 +59,13 @@ function Header(props) {
             </div>
             <div className="col-6 order-3 col-sm-6 col-md-4 col-lg-3">
               <div className="header-cart-area">
-                <div className="header-cart">
+                <div className="header-cart" onClick={showCart}>
                   <div className="btn-group">
                     <button className="btn-link dropdown-toggle icon-cart">
                       <i className="pe-7s-shopbag" />
                       <span className="count-style">2</span>
                     </button>
-                    <div className="dropdown-menu">
+                    <div id="cart-small-header" className="dropdown-menu">
                       <div className="shopping-cart-content">
                         <ul className="list-unstyled">
                           <li className="single-cart-item media">
@@ -124,13 +143,13 @@ function Header(props) {
                     </div>
                   </div>
                 </div>
-                <ul className="list-inline">
+                <ul className="list-inline" onClick={showSetting}>
                   <li className="top-links list-inline-item">
                     <div className="btn-group">
                       <button className="btn-link dropdown-toggle">
                         <i className="pe-7s-config" />
                       </button>
-                      <div className="dropdown-menu">
+                      <div className="dropdown-menu" id="setting-small-header">
                         <ul>
                           <li>
                             <Link to="/register">Register</Link>
@@ -181,12 +200,13 @@ function Header(props) {
                   <i className="fa fa-angle-down"></i>
                 </NavLink>
                 <ul>
-                  <li>
-                    <a href="/">FAQs Page</a>
-                  </li>
-                  <li>
-                    <a href="/">404 Page</a>
-                  </li>
+                  {
+                    categories.map((category,index)=>(
+                      <li key={index}>
+                        <Link to={`/shop/${category.id}`}>{category.name}</Link>
+                      </li>
+                    ))
+                  }
                 </ul>
               </li>
               <li>
