@@ -6,6 +6,7 @@ import Sidebar from "./components/Sidebar";
 import SortBy from "./components/SortBy";
 import ShopProduct from "./components/ShopProduct";
 import { useDispatch, useSelector } from "react-redux";
+import Swal from "sweetalert2/dist/sweetalert2.js";
 import {
   apiProductList,
   selectProduct,
@@ -13,13 +14,23 @@ import {
 } from "../../../../createSlices/productSlice";
 import { selectCategory } from "../../../../createSlices/categorySlice";
 import { useParams } from "react-router-dom";
+import {addToCart} from "../../../../createSlices/cartSlice";
 
 function Shop(props) {
   const { id } = useParams();
   const dispatch = useDispatch();
   const products = useSelector(selectProduct);
   const categories = useSelector(selectCategory);
-
+  const Toast = Swal.mixin({
+    toast: true,
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    onOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+})
   useEffect(() => {
     if(id){
       dispatch(apiProductByCategory(id));
@@ -27,8 +38,21 @@ function Shop(props) {
       dispatch(apiProductList());
     }
   }, [id]);
+
   if(id) var category = categories.find((x) => x.id === id);
 
+  const onHandleAddToCart = (product) => {
+    const cart = {
+      product : product,
+      quantity: 1
+    }
+    dispatch(addToCart(cart));
+    Toast.fire({
+      icon: 'success',
+      title: "Thêm giỏ hàng thành công !",
+      position: 'top-end'
+  })
+  }
   return (
     <div>
       <Breadcrumb title={category ? category.name : 'Shop' } />
@@ -40,7 +64,7 @@ function Shop(props) {
                 <main id="primary" className="site-main">
                   <div className="shop-wrapper">
                     <SortBy title={category ? category.name : 'Shop' } />
-                    <ShopProduct products={products} />
+                    <ShopProduct products={products} onHandleAddToCart={onHandleAddToCart} />
                   </div>
                 </main>
               </div>

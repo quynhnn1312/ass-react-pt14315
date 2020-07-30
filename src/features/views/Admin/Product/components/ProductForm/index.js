@@ -93,6 +93,7 @@ function ProductForm(props) {
                 className={
                   errors.price ? "form-control is-invalid" : "form-control"
                 }
+                step="0.001"
                 name="price"
                 placeholder="Enter price ..."
                 ref={register({ required: true, min: 1 })}

@@ -40,7 +40,7 @@ function ProductList(props) {
       <thead>
         <tr>
           <th>ID</th>
-          <th>Information</th>
+          <th width="35%">Information</th>
           <th>Category</th>
           <th>Image</th>
           <th>Price</th>
