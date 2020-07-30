@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import Pagination from "react-js-pagination";
 
 function ShopProduct(props) {
-  const { products } = props;
+  const { products, onHandleAddToCart } = props;
   const [perPage, setPerPage] = useState(9);
   const [activePage, setActivePage] = useState(1);
   const handlePageChange = (pageNumber) => {
@@ -14,6 +14,12 @@ function ShopProduct(props) {
   const indexOfLastProduct = activePage * perPage;
   const indexOfFirstProduct = indexOfLastProduct - perPage;
   const productData = products.slice(indexOfFirstProduct, indexOfLastProduct);
+
+  const onAddToCart = (product,e) => {
+    e.preventDefault()
+    if(!onHandleAddToCart) return;
+    onHandleAddToCart(product)
+  }
 
   return (
     <div className="row">
@@ -54,6 +60,7 @@ function ShopProduct(props) {
                               className="action-btn btn-cart"
                               href="#"
                               title="Add to Cart"
+                              onClick={(e)=>onAddToCart(product,e)}
                             >
                               <i className="pe-7s-shopbag" />
                             </a>
@@ -230,10 +237,10 @@ function ShopProduct(props) {
                               </span>
                               {product.discount > 0 ? (
                                 <span className="price-new">
-                                  {Math.ceil(
+                                  {
                                     ((100 - product.discount) / 100) *
                                       product.price
-                                  )}{" "}
+                                  }
                                   $
                                 </span>
                               ) : (
@@ -286,9 +293,11 @@ function ShopProduct(props) {
 
 ShopProduct.propTypes = {
   products: PropTypes.array,
+  onHandleAddToCart: PropTypes.func,
 };
 
 ShopProduct.defaultProps = {
   products: [],
+  onHandleAddToCart: null,
 };
 export default ShopProduct;

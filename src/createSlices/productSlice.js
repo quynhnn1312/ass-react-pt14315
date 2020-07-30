@@ -94,7 +94,6 @@ const product = createSlice({
     },
     [apiUpdateProduct.fulfilled]: (state, action) => {
       const newProduct = action.payload;
-      console.log(newProduct);
       const ProductIndex = state.findIndex(
         (product) => product.id === newProduct.id
       );
