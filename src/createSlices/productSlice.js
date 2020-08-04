@@ -1,19 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import categoryApi from "../api/categoryApi";
 import productApi from "../api/productApi";
 
 export const apiProductList = createAsyncThunk(
   "products/fetchProductsStatus",
   async () => {
     try {
-      const responseCategoryList = await categoryApi.getAll();
-      let responseProductList = await Promise.all(
-        responseCategoryList.map(async (cate) => {
-          let filmResponse = await productApi.getAll(cate.id);
-          return [...filmResponse];
-        })
-      );
-      return [].concat(...responseProductList);
+      const responseProductList = await productApi.getAll();
+      return responseProductList;
     } catch (error) {
       console.log("Failed to fetch product list: ", error);
     }
@@ -23,7 +16,7 @@ export const apiProductByCategory = createAsyncThunk(
   "products/fetchProductByCategoryStatus",
   async (id) => {
     try {
-      const responseProductByCategory = await  productApi.getAll(id);
+      const responseProductByCategory = await  productApi.getByCategory(id);
       return responseProductByCategory;
     } catch (error) {
       console.log("Failed to fetch product list: ", error);
@@ -34,10 +27,7 @@ export const apiAddProduct = createAsyncThunk(
   "products/fetchAddProductsStatus",
   async (requestProduct) => {
     try {
-      const responseAddProduct = await productApi.post(
-        requestProduct.categoryId,
-        requestProduct
-      );
+      const responseAddProduct = await productApi.post(requestProduct);
       return responseAddProduct;
     } catch (error) {
       console.log("Failed to fetch product list: ", error);
@@ -49,7 +39,6 @@ export const apiUpdateProduct = createAsyncThunk(
   async (requestProduct) => {
     try {
       const responseUpdateProduct = await productApi.put(
-        requestProduct.categoryId,
         requestProduct.id,
         requestProduct
       );
@@ -61,14 +50,11 @@ export const apiUpdateProduct = createAsyncThunk(
 );
 export const apiDeleteProduct = createAsyncThunk(
   "products/fetchDeleteProductsStatus",
-  async (data) => {
+  async (id) => {
     try {
-      const responseDeleteProduct = await productApi.delete(
-        data.cateId,
-        data.proId
-      );
-      console.log("remove", responseDeleteProduct);
-      return responseDeleteProduct;
+      const responseProductFindId = await productApi.get(id);
+      await productApi.delete(id);
+      return responseProductFindId;
     } catch (error) {
       console.log("Failed to fetch product list: ", error);
     }

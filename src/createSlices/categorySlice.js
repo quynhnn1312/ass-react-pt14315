@@ -52,8 +52,9 @@ export const apiDeleteCategory = createAsyncThunk(
   "categories/fetchDeleteCategoryStatus",
   async (id) => {
     try {
-      const responseDeleteCategory = await categoryApi.delete(id);
-      return responseDeleteCategory;
+      const responseCategoryFindId = await categoryApi.get(id);
+      await categoryApi.delete(id);
+      return responseCategoryFindId;
     } catch (error) {
       console.log("Failed to fetch category list: ", error);
     }

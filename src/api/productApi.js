@@ -1,26 +1,30 @@
 import axiosClient from "./axiosClient";
 
 const productApi = {
-  getAll: (cateId) => {
-    const url = `/categories/${cateId}/products`;
+  getAll: () => {
+    const url = `/products`;
     return axiosClient.get(url);
   },
-  get: (cateId, proId) => {
-    const url = `/categories/${cateId}/products/${proId}`;
+  get: (id) => {
+    const url = `/products/${id}`;
     return axiosClient.get(url);
   },
-  post: (cateId, requestProduct) => {
-    const url = `/categories/${cateId}/products`;
+  post: (requestProduct) => {
+    const url = `/products`;
     return axiosClient.post(url, requestProduct);
   },
-  delete: (cateId, proId) => {
-    const url = `/categories/${cateId}/products/${proId}`;
+  delete: (id) => {
+    const url = `/products/${id}`;
     return axiosClient.delete(url);
   },
-  put: (cateId, proId, requestProduct) => {
-    const url = `/categories/${cateId}/products/${proId}`;
+  put: (id, requestProduct) => {
+    const url = `/products/${id}`;
     return axiosClient.put(url, requestProduct);
   },
+  getByCategory: (id) => {
+    const url = `/categories/${id}/products`;
+    return axiosClient.get(url);
+  }
 };
 
 export default productApi;
