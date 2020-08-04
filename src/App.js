@@ -18,6 +18,8 @@ import NotFoundMain from "./components/Main/NotFoundMain/index";
 const Dashboard = React.lazy(() => import("./features/views/Admin/Dashboard"));
 const Product = React.lazy(() => import("./features/views/Admin/Product"));
 const Category = React.lazy(() => import("./features/views/Admin/Category"));
+const Transaction = React.lazy(() => import("./features/views/Admin/Transaction"));
+const BlogAdmin = React.lazy(() => import("./features/views/Admin/Blog"));
 
 // Main
 const Home = React.lazy(() => import("./features/views/Main/Home"));
@@ -30,6 +32,7 @@ const Register = React.lazy(() => import("./features/views/Main/Register"));
 const Login = React.lazy(() => import("./features/views/Main/Login"));
 const Checkout = React.lazy(() => import("./features/views/Main/Checkout"));
 const SingleProduct = React.lazy(() => import("./features/views/Main/SingleProduct"));
+const Thankyou = React.lazy(() => import("./features/views/Main/Thankyou"));
 
 function App() {
   return (
@@ -49,6 +52,7 @@ function App() {
       >
         <Router>
           <Switch>
+            <Route path="/thanh-you" component={Thankyou} />
             <Route path="/admin/:path?">
               <LayoutAdmin>
                 <Switch>
@@ -57,6 +61,8 @@ function App() {
                   <Route path="/admin/dashboard" component={Dashboard} />
                   <Route path="/admin/products" component={Product} />
                   <Route path="/admin/categories" component={Category} />
+                  <Route path="/admin/transactions" component={Transaction} />
+                  <Route path="/admin/blogs" component={BlogAdmin} />
                   <Route component={NotFound} />
                 </Switch>
               </LayoutAdmin>

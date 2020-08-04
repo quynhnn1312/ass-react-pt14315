@@ -39,6 +39,7 @@ function ProductList(props) {
     >
       <thead>
         <tr>
+          <th>STT</th>
           <th>ID</th>
           <th width="35%">Information</th>
           <th>Category</th>
@@ -51,6 +52,7 @@ function ProductList(props) {
       <tbody>
         {products.map((product, index) => (
           <tr key={index}>
+            <td>{index+1}</td>
             <td>{product.id}</td>
             <td className="text-left">
               <li>

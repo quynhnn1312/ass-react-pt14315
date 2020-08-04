@@ -35,6 +35,7 @@ function CategoryList(props) {
     >
       <thead>
         <tr>
+          <th>STT</th>
           <th>ID</th>
           <th>Name</th>
           <th>Status</th>
@@ -44,6 +45,7 @@ function CategoryList(props) {
       <tbody>
         {categories.map((category, index) => (
           <tr key={index}>
+            <td>{index+1}</td>
             <td>{category.id}</td>
             <td>{category.name}</td>
             <td>

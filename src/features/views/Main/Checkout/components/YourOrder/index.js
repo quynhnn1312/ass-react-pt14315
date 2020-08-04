@@ -56,13 +56,11 @@ function YourOrder({ carts, totalCart }) {
         </div>
       </div>
       <div className="checkout-payment">
-        <form action="#">
           <div className="form-row">
             <div className="custom-radio">
               <input
                 className="form-check-input"
                 type="radio"
-                name="payment"
                 id="cash_delivery_payment"
                 defaultValue="cash"
                 defaultChecked
@@ -79,31 +77,6 @@ function YourOrder({ carts, totalCart }) {
               </div>
             </div>
           </div>
-          <div className="form-row">
-            <div className="form-check">
-              <div className="custom-checkbox">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id="terms_acceptance"
-                  required
-                />
-                <span className="checkmark" />
-                <label className="form-check-label" htmlFor="terms_acceptance">
-                  I agree to the <a href="#">terms of service</a> and will
-                  adhere to them unconditionally.
-                </label>
-              </div>
-            </div>
-          </div>
-          <div className="form-row justify-content-end">
-            <input
-              type="submit"
-              className="btn btn-secondary dark"
-              defaultValue="Continue to Payment"
-            />
-          </div>
-        </form>
       </div>
     </div>
   );
