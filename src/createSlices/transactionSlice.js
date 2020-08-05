@@ -23,7 +23,6 @@ export const apiAddTransaction = createAsyncThunk(
   async (request) => {
     try {
       const dataCart = JSON.parse(localStorage.getItem('CART'));
-      console.log(dataCart)
       const responseAddTransaction = await transactionApi.post(request);
       await Promise.all(dataCart.map(async(cart)=>{
         const data = {
@@ -31,6 +30,8 @@ export const apiAddTransaction = createAsyncThunk(
           "productId": cart.product.id,
           "quantity": cart.quantity,
           "price": cart.product.price,
+          "image": cart.product.avatar,
+          "name": cart.product.name,
           "discount": cart.product.discount,
           "created_at": dateTime,
           "updated_at": dateTime

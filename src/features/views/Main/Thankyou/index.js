@@ -1,8 +1,37 @@
+/* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from "react";
+import React, {useEffect} from "react";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { selectTransaction, apiTransactionList } from "../../../../createSlices/transactionSlice";
+import { apiOrderList, selectOrder } from "../../../../createSlices/orderSlice";
 
 function Thankyou() {
+  const transactions = useSelector(selectTransaction);
+  const orders = useSelector(selectOrder);
+  const dispatch = useDispatch();
+  var totalCart = 0;
+  useEffect(() => {
+    dispatch(apiTransactionList());
+    dispatch(apiOrderList());
+  }, []);
+
+  const transaction = transactions[transactions.length - 1];
+  if(orders){
+   var carts =  orders.filter((order) => order.transactionId === transaction.id);
+  }
+  if (carts) {
+    for (let i = 0; i < carts.length; i++) {
+      if (carts[i].discount > 0) {
+        totalCart +=
+          ((100 - carts[i].discount) / 100) *
+          carts[i].price *
+          carts[i].quantity;
+      } else {
+        totalCart += carts[i].price * carts[i].quantity;
+      }
+    }
+  }
   return (
     <div className="thankyou-page">
       <div context="checkout" className="container">
@@ -50,10 +79,98 @@ function Thankyou() {
                 <div className="thankyou-message-text">
                   <h3>Cảm ơn bạn đã đặt hàng</h3>
                   <p>
-                    Một email xác nhận đã được gửi tới. Xin vui lòng kiểm tra
+                    Một email xác nhận đã được gửi tới {transaction ? transaction.email : " "} . Xin vui lòng kiểm tra
                     email của bạn
                   </p>
                   <div style={{ fontStyle: "italic" }}></div>
+                </div>
+                <div className="customer-info mt-5">
+                  <div className="shipping-info">
+                    <div className="row">
+                      <div className="col-md-6 col-sm-6">
+                        <div className="order-summary order-summary--white no-border no-padding-top">
+                          <div className="order-summary-header">
+                            <h2>
+                              <label className="control-label">
+                                Thông tin nhận hàng
+                              </label>
+                            </h2>
+                          </div>
+                          <div className="summary-section no-border no-padding-top">
+                            <p className="address-name">{transaction ? transaction.name : " "}</p>
+                            <p className="address-address">{transaction ? transaction.phone : " "}</p>
+                            <p className="address-ward">{transaction ? transaction.email : " "}</p>
+                            <p className="address-ward">{transaction ? transaction.address : " "}</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-md-6 col-sm-6">
+                        <div className="order-summary order-summary--white no-border">
+                          <div className="order-summary-header">
+                            <h2>
+                              <label className="control-label">
+                                Thông tin thanh toán
+                              </label>
+                            </h2>
+                          </div>
+                          <div className="summary-section no-border no-padding-top">
+                            <p className="address-name">{transaction ? transaction.name : " "}</p>
+                            <p className="address-address">{transaction ? transaction.phone : " "}</p>
+                            <p className="address-ward">{transaction ? transaction.email : " "}</p>
+                            <p className="address-ward">{transaction ? transaction.address : " "}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-md-6 col-sm-6">
+                        <div className="order-summary order-summary--white no-border">
+                          <div className="order-summary-header">
+                            <h2>
+                              <label className="control-label">
+                                Hình thức thanh toán
+                              </label>
+                            </h2>
+                          </div>
+                          <div className="summary-section no-border no-padding-top">
+                            <span>Thanh toán khi giao hàng (COD)</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-md-6 col-sm-6">
+                        <div className="order-summary order-summary--white no-border">
+                          <div className="order-summary-header">
+                            <h2>
+                              <label className="control-label">
+                                Hình thức vận chuyển
+                              </label>
+                            </h2>
+                          </div>
+                          <div className="summary-section no-border no-padding-top">
+                            <span>Thanh toán khi giao hàng (COD)</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="order-success unprint">
+                    <Link
+                      to="/"
+                      style={{ background: "#2a6395", borderColor: "#225179" }}
+                      className="btn btn-primary text-white"
+                    >
+                      Tiếp tục mua hàng
+                    </Link>
+                    <a className="nounderline print-link" href="#">
+                      <div className="print-link__block clearfix">
+                        <i
+                          className="fa fa-print icon-print"
+                          aria-hidden="true"
+                        ></i>{" "}
+                        In
+                      </div>
+                    </a>
+                  </div>
                 </div>
               </div>
               <div className="col-md-5 col-sm-12 order-info">
@@ -76,7 +193,44 @@ function Thankyou() {
                   <div className="order-items mobile--is-collapsed">
                     <div className="summary-body summary-section summary-product">
                       <div className="summary-product-list">
-                        <ul className="product-list"></ul>
+                        <ul className="product-list">
+                          {carts ? carts.map((cart, index) => (
+                            <li
+                              key={index}
+                              className="product product-has-image clearfix"
+                            >
+                              <div className="product-thumbnail pull-left">
+                                <div className="product-thumbnail__wrapper">
+                                  <img
+                                    src={cart.image}
+                                    className="product-thumbnail__image"
+                                  />
+                                </div>
+                                <span
+                                  className="product-thumbnail__quantity unprint"
+                                  aria-hidden="true"
+                                >
+                                  1
+                                </span>
+                              </div>
+                              <div className="product-info pull-left">
+                                <span className="product-info-name">
+                                  <strong>{cart.name}</strong>
+                                  <label className="print">
+                                    x{cart.quantity}
+                                  </label>
+                                </span>
+                              </div>
+                              <strong className="product-price pull-right">
+                                $
+                                {cart.discount > 0
+                                  ? ((100 - cart.discount) / 100) *
+                                    cart.price
+                                  : cart.price}
+                              </strong>
+                            </li>
+                          )) : " "}
+                        </ul>
                       </div>
                     </div>
                   </div>
@@ -85,7 +239,7 @@ function Thankyou() {
                       <span className="total-line-name pull-left">
                         Tạm tính
                       </span>
-                      <span className="total-line-subprice pull-right"></span>
+                      <span className="total-line-subprice pull-right">${totalCart}</span>
                     </div>
                   </div>
                   <div className="summary-section">
@@ -93,84 +247,9 @@ function Thankyou() {
                       <span className="total-line-name total-line-name--bold pull-left">
                         Tổng cộng
                       </span>
-                      <span className="total-line-price pull-right"></span>
+                      <span className="total-line-price pull-right">${totalCart}</span>
                     </div>
                   </div>
-                </div>
-              </div>
-              <div className="col-md-7 col-sm-12 customer-info">
-                <div className="shipping-info">
-                  <div className="row">
-                    <div className="col-md-6 col-sm-6">
-                      <div className="order-summary order-summary--white no-border no-padding-top">
-                        <div className="order-summary-header">
-                          <h2>
-                            <label className="control-label">
-                              Thông tin nhận hàng
-                            </label>
-                          </h2>
-                        </div>
-                        <div className="summary-section no-border no-padding-top">
-                          <p className="address-name"></p>
-                          <p className="address-address"></p>
-                          <p className="address-ward"></p>
-                          <p className="address-ward"></p>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-md-6 col-sm-6">
-                      <div className="order-summary order-summary--white no-border">
-                        <div className="order-summary-header">
-                          <h2>
-                            <label className="control-label">
-                              Thông tin thanh toán
-                            </label>
-                          </h2>
-                        </div>
-                        <div className="summary-section no-border no-padding-top">
-                          <p className="address-name"></p>
-                          <p className="address-address"></p>
-                          <p className="address-ward"></p>
-                          <p className="address-ward"></p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-6 col-sm-6">
-                      <div className="order-summary order-summary--white no-border">
-                        <div className="order-summary-header">
-                          <h2>
-                            <label className="control-label">
-                              Hình thức thanh toán
-                            </label>
-                          </h2>
-                        </div>
-                        <div className="summary-section no-border no-padding-top">
-                          <span>Thanh toán khi giao hàng (COD)</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-md-6 col-sm-6">
-                      <div className="order-summary order-summary--white no-border">
-                        <div className="order-summary-header">
-                          <h2>
-                            <label className="control-label">
-                              Hình thức vận chuyển
-                            </label>
-                          </h2>
-                        </div>
-                        <div className="summary-section no-border no-padding-top">
-                          <span>Thanh toán khi giao hàng (COD)</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="order-success unprint">
-                  <Link to="/" className="btn btn-primary text-white">
-                    Tiếp tục mua hàng
-                  </Link>
                 </div>
               </div>
             </div>

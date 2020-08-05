@@ -36,12 +36,14 @@ function Checkout() {
   const onHandleSubmit = (data)=> {
     data.created_at = dateTime;
     data.updated_at = dateTime;
+    data.total = totalCart;
     dispatch(apiAddTransaction(data))
     setTimeout(()=>{
-      // dispatch(resetCart([]))
+      dispatch(resetCart([]))
       history.push("/thanh-you");
-    },1000);
+    },1500);
   }
+
   return (
     <div className="checkout-page">
       <Breadcrumb title="Checkout" />

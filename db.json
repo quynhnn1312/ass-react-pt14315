@@ -6,167 +6,43 @@
       "id": "3"
     }
   ],
-  "products": [
-    {
-      "id": "11",
-      "categoryId": "5",
-      "name": "Tasty Concrete Gloves",
-      "avatar": "https://s3.amazonaws.com/uifaces/faces/twitter/liminha/128.jpg",
-      "price": "37.00",
-      "discount": 85,
-      "amount": 10,
-      "short_description": "short_description 11",
-      "detail": "detail 11",
-      "status": false
-    },
-    {
-      "id": "16",
-      "categoryId": "5",
-      "name": "Tasty Soft Mouse",
-      "avatar": "https://s3.amazonaws.com/uifaces/faces/twitter/evandrix/128.jpg",
-      "price": "649.00",
-      "discount": 89,
-      "amount": 85,
-      "short_description": "short_description 16",
-      "detail": "detail 16",
-      "status": false
-    },
-    {
-      "id": "21",
-      "categoryId": "5",
-      "name": "Gorgeous Rubber Bike",
-      "avatar": "https://s3.amazonaws.com/uifaces/faces/twitter/ryandownie/128.jpg",
-      "price": "715.00",
-      "discount": 90,
-      "amount": 21,
-      "short_description": "short_description 21",
-      "detail": "detail 21",
-      "status": false
-    },
-    {
-      "id": "26",
-      "categoryId": "5",
-      "name": "Tasty Rubber Keyboard",
-      "avatar": "https://s3.amazonaws.com/uifaces/faces/twitter/depaulawagner/128.jpg",
-      "price": "586.00",
-      "discount": 82,
-      "amount": 71,
-      "short_description": "short_description 26",
-      "detail": "detail 26",
-      "status": false
-    }
-  ],
+  "products": [],
   "transactions": [
     {
+      "total" : "835793",
       "name": "quynh quynh",
       "email": "quynhnnph09019@fpt.edu.vn",
       "address": "TẦNG 6, TOÀ NHÀ CORNERSTONE, 16 PHAN CHU TRINH, QUẬN HOÀN KIẾM, HÀ NỘI",
       "phone": "98123676",
-      "note": "a;snc",
-      "created_at": "2020-08-04 10:16:15",
-      "updated_at": "2020-08-04 10:16:15",
+      "note": "MS Cas,",
+      "created_at": "2020-08-05 15:03:24",
+      "updated_at": "2020-08-05 15:03:24",
       "id": 1
-    },
-    {
-      "name": "quynh quynh",
-      "email": "quynhnnph09019@fpt.edu.vn",
-      "address": "TẦNG 6, TOÀ NHÀ CORNERSTONE, 16 PHAN CHU TRINH, QUẬN HOÀN KIẾM, HÀ NỘI",
-      "phone": "98123676",
-      "note": "",
-      "created_at": "2020-08-04 10:16:15",
-      "updated_at": "2020-08-04 10:16:15",
-      "id": 2
-    },
-    {
-      "name": "quynh quynh",
-      "email": "quynhnnph09019@fpt.edu.vn",
-      "address": "TẦNG 6, TOÀ NHÀ CORNERSTONE, 16 PHAN CHU TRINH, QUẬN HOÀN KIẾM, HÀ NỘI",
-      "phone": "98123676",
-      "note": "sd;vnl",
-      "created_at": "2020-08-04 10:51:37",
-      "updated_at": "2020-08-04 10:51:37",
-      "id": 3
-    },
-    {
-      "name": "quynh quynh",
-      "email": "quynhnnph09019@fpt.edu.vn",
-      "address": "TẦNG 6, TOÀ NHÀ CORNERSTONE, 16 PHAN CHU TRINH, QUẬN HOÀN KIẾM, HÀ NỘI",
-      "phone": "98123676",
-      "note": "a.skc",
-      "created_at": "2020-08-04 10:54:24",
-      "updated_at": "2020-08-04 10:54:24",
-      "id": 4
-    },
-    {
-      "name": "quynh quynh",
-      "email": "quynhnnph09019@fpt.edu.vn",
-      "address": "TẦNG 6, TOÀ NHÀ CORNERSTONE, 16 PHAN CHU TRINH, QUẬN HOÀN KIẾM, HÀ NỘI",
-      "phone": "98123676",
-      "note": "skldevn ",
-      "created_at": "2020-08-04 10:55:45",
-      "updated_at": "2020-08-04 10:55:45",
-      "id": 5
-    },
-    {
-      "name": "quynh quynh",
-      "email": "quynhnnph09019@fpt.edu.vn",
-      "address": "TẦNG 6, TOÀ NHÀ CORNERSTONE, 16 PHAN CHU TRINH, QUẬN HOÀN KIẾM, HÀ NỘI",
-      "phone": "98123676",
-      "note": "",
-      "created_at": "2020-08-04 10:57:48",
-      "updated_at": "2020-08-04 10:57:48",
-      "id": 6
-    },
-    {
-      "name": "quynh quynh",
-      "email": "quynhnnph09019@fpt.edu.vn",
-      "address": "TẦNG 6, TOÀ NHÀ CORNERSTONE, 16 PHAN CHU TRINH, QUẬN HOÀN KIẾM, HÀ NỘI",
-      "phone": "98123676",
-      "note": "ksdvn",
-      "created_at": "2020-08-04 11:01:13",
-      "updated_at": "2020-08-04 11:01:13",
-      "id": 7
-    },
-    {
-      "name": "quynh quynh",
-      "email": "quynhnnph09019@fpt.edu.vn",
-      "address": "TẦNG 6, TOÀ NHÀ CORNERSTONE, 16 PHAN CHU TRINH, QUẬN HOÀN KIẾM, HÀ NỘI",
-      "phone": "98123676",
-      "note": "jlb;FIO",
-      "created_at": "2020-08-04 12:20:03",
-      "updated_at": "2020-08-04 12:20:03",
-      "id": 8
     }
   ],
   "orders": [
     {
       "transactionId": 1,
-      "productId": "11",
+      "productId": "16",
       "quantity": 1,
-      "price": "37.00",
-      "discount": 85,
-      "created_at": "2020-08-04 10:15:49",
-      "updated_at": "2020-08-04 10:15:49",
-      "id": 1
+      "price": "649.00",
+      "image": "https://s3.amazonaws.com/uifaces/faces/twitter/evandrix/128.jpg",
+      "name": "Tasty Soft Mouse",
+      "discount": 89,
+      "created_at": "2020-08-05 05:54:54",
+      "updated_at": "2020-08-05 05:54:54",
+      "id": 2
     },
     {
       "transactionId": 1,
       "productId": "26",
       "quantity": 1,
       "price": "586.00",
+      "image": "https://s3.amazonaws.com/uifaces/faces/twitter/depaulawagner/128.jpg",
+      "name": "Tasty Rubber Keyboard",
       "discount": 82,
-      "created_at": "2020-08-04 10:15:49",
-      "updated_at": "2020-08-04 10:15:49",
-      "id": 2
-    },
-    {
-      "transactionId": 1,
-      "productId": "16",
-      "quantity": 1,
-      "price": "649.00",
-      "discount": 89,
-      "created_at": "2020-08-04 10:15:49",
-      "updated_at": "2020-08-04 10:15:49",
+      "created_at": "2020-08-05 05:54:54",
+      "updated_at": "2020-08-05 05:54:54",
       "id": 3
     },
     {
@@ -174,210 +50,12 @@
       "productId": "21",
       "quantity": 1,
       "price": "715.00",
+      "image": "https://s3.amazonaws.com/uifaces/faces/twitter/ryandownie/128.jpg",
+      "name": "Gorgeous Rubber Bike",
       "discount": 90,
-      "created_at": "2020-08-04 10:15:49",
-      "updated_at": "2020-08-04 10:15:49",
+      "created_at": "2020-08-05 05:54:54",
+      "updated_at": "2020-08-05 05:54:54",
       "id": 4
-    },
-    {
-      "transactionId": 2,
-      "productId": "11",
-      "quantity": 1,
-      "price": "37.00",
-      "discount": 85,
-      "created_at": "2020-08-04 10:15:49",
-      "updated_at": "2020-08-04 10:15:49",
-      "id": 5
-    },
-    {
-      "transactionId": 2,
-      "productId": "21",
-      "quantity": 1,
-      "price": "715.00",
-      "discount": 90,
-      "created_at": "2020-08-04 10:15:49",
-      "updated_at": "2020-08-04 10:15:49",
-      "id": 6
-    },
-    {
-      "transactionId": 2,
-      "productId": "16",
-      "quantity": 1,
-      "price": "649.00",
-      "discount": 89,
-      "created_at": "2020-08-04 10:15:49",
-      "updated_at": "2020-08-04 10:15:49",
-      "id": 7
-    },
-    {
-      "transactionId": 2,
-      "productId": "26",
-      "quantity": 1,
-      "price": "586.00",
-      "discount": 82,
-      "created_at": "2020-08-04 10:15:49",
-      "updated_at": "2020-08-04 10:15:49",
-      "id": 8
-    },
-    {
-      "transactionId": 3,
-      "productId": "11",
-      "quantity": 1,
-      "price": "37.00",
-      "discount": 85,
-      "created_at": "2020-08-04 10:51:36",
-      "updated_at": "2020-08-04 10:51:36",
-      "id": 9
-    },
-    {
-      "transactionId": 3,
-      "productId": "16",
-      "quantity": 1,
-      "price": "649.00",
-      "discount": 89,
-      "created_at": "2020-08-04 10:51:36",
-      "updated_at": "2020-08-04 10:51:36",
-      "id": 10
-    },
-    {
-      "transactionId": 4,
-      "productId": "11",
-      "quantity": 1,
-      "price": "37.00",
-      "discount": 85,
-      "created_at": "2020-08-04 10:54:23",
-      "updated_at": "2020-08-04 10:54:23",
-      "id": 11
-    },
-    {
-      "transactionId": 4,
-      "productId": "16",
-      "quantity": 1,
-      "price": "649.00",
-      "discount": 89,
-      "created_at": "2020-08-04 10:54:23",
-      "updated_at": "2020-08-04 10:54:23",
-      "id": 12
-    },
-    {
-      "transactionId": 5,
-      "productId": "11",
-      "quantity": 1,
-      "price": "37.00",
-      "discount": 85,
-      "created_at": "2020-08-04 10:55:44",
-      "updated_at": "2020-08-04 10:55:44",
-      "id": 13
-    },
-    {
-      "transactionId": 5,
-      "productId": "16",
-      "quantity": 1,
-      "price": "649.00",
-      "discount": 89,
-      "created_at": "2020-08-04 10:55:44",
-      "updated_at": "2020-08-04 10:55:44",
-      "id": 14
-    },
-    {
-      "transactionId": 5,
-      "productId": "21",
-      "quantity": 1,
-      "price": "715.00",
-      "discount": 90,
-      "created_at": "2020-08-04 10:55:44",
-      "updated_at": "2020-08-04 10:55:44",
-      "id": 15
-    },
-    {
-      "transactionId": 6,
-      "productId": "11",
-      "quantity": 1,
-      "price": "37.00",
-      "discount": 85,
-      "created_at": "2020-08-04 10:57:47",
-      "updated_at": "2020-08-04 10:57:47",
-      "id": 16
-    },
-    {
-      "transactionId": 6,
-      "productId": "16",
-      "quantity": 1,
-      "price": "649.00",
-      "discount": 89,
-      "created_at": "2020-08-04 10:57:47",
-      "updated_at": "2020-08-04 10:57:47",
-      "id": 17
-    },
-    {
-      "transactionId": 6,
-      "productId": "21",
-      "quantity": 1,
-      "price": "715.00",
-      "discount": 90,
-      "created_at": "2020-08-04 10:57:47",
-      "updated_at": "2020-08-04 10:57:47",
-      "id": 18
-    },
-    {
-      "transactionId": 7,
-      "productId": "11",
-      "quantity": 1,
-      "price": "37.00",
-      "discount": 85,
-      "created_at": "2020-08-04 11:01:12",
-      "updated_at": "2020-08-04 11:01:12",
-      "id": 19
-    },
-    {
-      "transactionId": 7,
-      "productId": "21",
-      "quantity": 1,
-      "price": "715.00",
-      "discount": 90,
-      "created_at": "2020-08-04 11:01:12",
-      "updated_at": "2020-08-04 11:01:12",
-      "id": 20
-    },
-    {
-      "transactionId": 7,
-      "productId": "16",
-      "quantity": 1,
-      "price": "649.00",
-      "discount": 89,
-      "created_at": "2020-08-04 11:01:12",
-      "updated_at": "2020-08-04 11:01:12",
-      "id": 21
-    },
-    {
-      "transactionId": 8,
-      "productId": "11",
-      "quantity": 1,
-      "price": "37.00",
-      "discount": 85,
-      "created_at": "2020-08-04 12:20:02",
-      "updated_at": "2020-08-04 12:20:02",
-      "id": 22
-    },
-    {
-      "transactionId": 8,
-      "productId": "16",
-      "quantity": 1,
-      "price": "649.00",
-      "discount": 89,
-      "created_at": "2020-08-04 12:20:02",
-      "updated_at": "2020-08-04 12:20:02",
-      "id": 23
-    },
-    {
-      "transactionId": 8,
-      "productId": "21",
-      "quantity": 1,
-      "price": "715.00",
-      "discount": 90,
-      "created_at": "2020-08-04 12:20:02",
-      "updated_at": "2020-08-04 12:20:02",
-      "id": 24
     }
   ]
 }
