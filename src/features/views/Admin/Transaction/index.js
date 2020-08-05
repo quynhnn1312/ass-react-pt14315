@@ -1,27 +1,39 @@
-import React,{useState} from 'react'
-import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
 import Pagination from "react-js-pagination";
+import { useDispatch, useSelector } from "react-redux";
+import { selectTransaction, apiTransactionList } from "../../../../createSlices/transactionSlice";
 import ShowPerPage from "./components/ShowPerPage";
-import TransactionSearch from "./components/TransactionSearch";
 import TransactionList from './components/TransactionList';
+import TransactionSearch from "./components/TransactionSearch";
 
 function Transaction(props) {
+  const dispatch = useDispatch();
+  const transactions = useSelector(selectTransaction);
   const [activePage, setActivePage] = useState(1);
   const [perPage, setPerPage] = useState(10);
   const [searchData, setSearchData] = useState();
+
   const handlePageChange = (pageNumber) => {
     setActivePage(pageNumber);
   };
   const onHandlePerPage = (value) => {
     setPerPage(+value);
   };
+  const indexOfLastTransaction = activePage * perPage;
+  const indexOfFirstTransaction = indexOfLastTransaction - perPage;
+  const TransactionData = transactions.slice(indexOfFirstTransaction, indexOfLastTransaction);
   const onSubmitSearch = (keyword) => {
-    // const result = categories.filter(
-    //   (category) =>
-    //     category.name.toLowerCase().indexOf(keyword.toLowerCase()) !== -1
-    // );
-    // keyword == "" ? setSearchData(0) : setSearchData(result);
+    const result = transactions.filter(
+      (transaction) =>
+        transaction.name.toLowerCase().indexOf(keyword.toLowerCase()) !== -1
+    );
+    keyword == "" ? setSearchData(0) : setSearchData(result);
   };
+
+  useEffect(() => {
+    dispatch(apiTransactionList());
+  }, [])
+
   return (
     <div className="container-fluid">
       {/* Page Heading */}
@@ -55,9 +67,7 @@ function Transaction(props) {
               <div className="row">
                 <div className="col-sm-12">
                   <TransactionList
-                    // categories={searchData ? searchData : categoryData}
-                    // onCategoryRemoveClick={onCategoryRemoveClick}
-                    // onCategoryUpdateClick={onCategoryUpdateClick}
+                    transactions={searchData ? searchData : TransactionData}
                   />
                 </div>
               </div>
@@ -69,7 +79,7 @@ function Transaction(props) {
                     role="status"
                     aria-live="polite"
                   >
-                    {/* Showing 1 to {perPage} of {categories.length} entries */}
+                    Showing 1 to {perPage} of {transactions.length} entries
                   </div>
                 </div>
                 <div className="col-sm-12 col-md-7">
@@ -84,7 +94,7 @@ function Transaction(props) {
                       activePage={activePage}
                       itemsCountPerPage={perPage}
                       totalItemsCount={
-                        100
+                        searchData ? searchData.length : transactions.length
                       }
                       pageRangeDisplayed={5}
                       itemClass="page-item"

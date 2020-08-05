@@ -2,7 +2,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-function TransactionList(props) {
+function TransactionList({ transactions }) {
   return (
     <div>
       <table
@@ -15,7 +15,7 @@ function TransactionList(props) {
           <tr>
             <th>STT</th>
             <th>ID</th>
-            <th>Information</th>
+            <th width="30%">Information</th>
             <th>Total</th>
             <th>Status</th>
             <th>Date booking</th>
@@ -23,56 +23,67 @@ function TransactionList(props) {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>STT</td>
-            <td>ID</td>
-            <td>Information</td>
-            <td>Total</td>
-            <td>Status</td>
-            <td>Date booking</td>
-            <td>
-              <div>
-                <a
-                  href="#"
-                  className="btn btn-sm btn-info"
-                  data-toggle="modal"
-                  data-target="#modal-lg"
-                >
-                  <i className="fa fa-eye" /> View
-                </a>{" "}
-                &nbsp;
-                <div className="btn-group">
-                  <button type="button" className="btn btn-sm btn-success">
-                    Action
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-sm btn-success dropdown-toggle dropdown-toggle-split"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
+          {transactions.map((transaction, index) => (
+            <tr key={index}>
+              <td>{index + 1}</td>
+              <td>{transaction.id}</td>
+              <td>
+                <li>{transaction.name}</li>
+                <li>{transaction.email}</li>
+                <li>{transaction.phone}</li>
+                <li>{transaction.address}</li>
+              </td>
+              <td>${transaction.total}</td>
+              <td>
+                <span className="badge badge-secondary">Tiếp nhận</span> <br/>
+                <span className="badge badge-danger">Đã Huỷ</span> <br/>
+                <span className="badge badge-success">Hoàn thành</span>
+              </td>
+              <td>{transaction.created_at}</td>
+              <td>
+                <div>
+                  <a
+                    href="#"
+                    className="btn btn-sm btn-info"
+                    data-toggle="modal"
+                    data-target="#modal-lg"
                   >
-                    <span className="sr-only">Toggle Dropdown</span>
-                  </button>
-                  <div className="dropdown-menu">
-                    <a className="dropdown-item" href="#">
-                      <i className="fa fa-ban" /> &nbsp; Đang bàn giao
-                    </a>
-                    <a className="dropdown-item" href="#">
-                      <i className="fa fa-ban" /> &nbsp; Đã bàn giao
-                    </a>
-                    <a className="dropdown-item" href="#">
-                      <i className="fa fa-ban" /> &nbsp; Hủy
-                    </a>
-                    <div className="dropdown-divider" />
-                    <a className="dropdown-item" href="#">
-                      <i className="fas fa-trash-alt" /> &nbsp; Xóa
-                    </a>
+                    <i className="fa fa-eye" /> View
+                  </a>{" "}
+                  &nbsp;
+                  <div className="btn-group">
+                    <button type="button" className="btn btn-sm btn-success">
+                      Action
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-sm btn-success dropdown-toggle dropdown-toggle-split"
+                      data-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                    >
+                      <span className="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <div className="dropdown-menu">
+                      <a className="dropdown-item" href="#">
+                        <i className="fa fa-ban" /> &nbsp; Đang bàn giao
+                      </a>
+                      <a className="dropdown-item" href="#">
+                        <i className="fa fa-ban" /> &nbsp; Đã bàn giao
+                      </a>
+                      <a className="dropdown-item" href="#">
+                        <i className="fa fa-ban" /> &nbsp; Hủy
+                      </a>
+                      <div className="dropdown-divider" />
+                      <a className="dropdown-item" href="#">
+                        <i className="fas fa-trash-alt" /> &nbsp; Xóa
+                      </a>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </td>
-          </tr>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
       <div className="modal fade show" id="modal-lg" aria-modal="true">
