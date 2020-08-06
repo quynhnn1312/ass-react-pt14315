@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import Pagination from "react-js-pagination";
 import { useDispatch, useSelector } from "react-redux";
-import { selectTransaction, apiTransactionList } from "../../../../createSlices/transactionSlice";
+import { selectTransaction, apiTransactionList, apiUpdateTransaction, apiDeleteTransaction } from "../../../../createSlices/transactionSlice";
 import ShowPerPage from "./components/ShowPerPage";
 import TransactionList from './components/TransactionList';
 import TransactionSearch from "./components/TransactionSearch";
+import Swal from "sweetalert2/dist/sweetalert2.js";
 
 function Transaction(props) {
   const dispatch = useDispatch();
@@ -33,6 +34,21 @@ function Transaction(props) {
   useEffect(() => {
     dispatch(apiTransactionList());
   }, [])
+
+  const onHandleStatus = (value,transaction) => {
+    const data = {...transaction, "status" : value}
+    dispatch(apiUpdateTransaction(data));
+  }
+
+  const onHandleRemoveTransaction = (id) => {
+    dispatch(apiDeleteTransaction(id));
+    Swal.fire({
+      icon: "success",
+      title: "Đã xóa",
+      showConfirmButton: false,
+      timer: 1000,
+    });
+  }
 
   return (
     <div className="container-fluid">
@@ -68,6 +84,8 @@ function Transaction(props) {
                 <div className="col-sm-12">
                   <TransactionList
                     transactions={searchData ? searchData : TransactionData}
+                    onHandleStatus={onHandleStatus}
+                    onHandleRemoveTransaction={onHandleRemoveTransaction}
                   />
                 </div>
               </div>

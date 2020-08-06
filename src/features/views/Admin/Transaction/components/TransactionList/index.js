@@ -1,8 +1,63 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
+import Swal from "sweetalert2/dist/sweetalert2.js";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectOrder,
+  apiOrderList,
+} from "../../../../../../createSlices/orderSlice";
+import { Link } from "react-router-dom";
 
-function TransactionList({ transactions }) {
+function TransactionList({
+  transactions,
+  onHandleStatus,
+  onHandleRemoveTransaction,
+}) {
+  const [transactionId, setTransactionId] = useState();
+  const dispatch = useDispatch();
+  const orders = useSelector(selectOrder);
+  const changeStatus = (e, value, transaction) => {
+    if (!onHandleStatus) return;
+    e.preventDefault();
+    onHandleStatus(value, transaction);
+  };
+
+  const removeTransaction = (e, id) => {
+    e.preventDefault();
+    Swal.fire({
+      title: "Chắc chắn xóa transaction?",
+      text: "Sau khi xóa sẽ không lấy lại dữ liệu được!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Đồng ý!",
+      cancelButtonText: "Không đồng ý!",
+    }).then((result) => {
+      if (result.value) {
+        if (!onHandleRemoveTransaction) return;
+        onHandleRemoveTransaction(id);
+      }
+    });
+  };
+
+  const onListOrderByTransactionId = (e, id) => {
+    e.preventDefault();
+    if (id) {
+      dispatch(apiOrderList());
+      setTransactionId(id);
+    }
+  };
+  var listOrderByTransactionId = [];
+  if (transactionId) {
+    listOrderByTransactionId = orders.filter(
+      (order) => order.transactionId === transactionId
+    );
+  }
+
+  var totalTransaction = 0;
+
   return (
     <div>
       <table
@@ -35,9 +90,26 @@ function TransactionList({ transactions }) {
               </td>
               <td>${transaction.total}</td>
               <td>
-                <span className="badge badge-secondary">Tiếp nhận</span> <br/>
-                <span className="badge badge-danger">Đã Huỷ</span> <br/>
-                <span className="badge badge-success">Hoàn thành</span>
+                {transaction.status === 0 ? (
+                  <span className="badge badge-secondary">Tiếp nhận</span>
+                ) : (
+                  ""
+                )}
+                {transaction.status === 1 ? (
+                  <span className="badge badge-info">Đang vận chuyển</span>
+                ) : (
+                  ""
+                )}
+                {transaction.status === 2 ? (
+                  <span className="badge badge-success">Hoàn thành</span>
+                ) : (
+                  ""
+                )}
+                {transaction.status === -1 ? (
+                  <span className="badge badge-danger">Đã Huỷ</span>
+                ) : (
+                  ""
+                )}
               </td>
               <td>{transaction.created_at}</td>
               <td>
@@ -47,9 +119,12 @@ function TransactionList({ transactions }) {
                     className="btn btn-sm btn-info"
                     data-toggle="modal"
                     data-target="#modal-lg"
+                    onClick={(e) =>
+                      onListOrderByTransactionId(e, transaction.id)
+                    }
                   >
                     <i className="fa fa-eye" /> View
-                  </a>{" "}
+                  </a>
                   &nbsp;
                   <div className="btn-group">
                     <button type="button" className="btn btn-sm btn-success">
@@ -65,17 +140,33 @@ function TransactionList({ transactions }) {
                       <span className="sr-only">Toggle Dropdown</span>
                     </button>
                     <div className="dropdown-menu">
-                      <a className="dropdown-item" href="#">
+                      <a
+                        className="dropdown-item"
+                        href="#"
+                        onClick={(e) => changeStatus(e, 1, transaction)}
+                      >
                         <i className="fa fa-ban" /> &nbsp; Đang bàn giao
                       </a>
-                      <a className="dropdown-item" href="#">
+                      <a
+                        className="dropdown-item"
+                        href="#"
+                        onClick={(e) => changeStatus(e, 2, transaction)}
+                      >
                         <i className="fa fa-ban" /> &nbsp; Đã bàn giao
                       </a>
-                      <a className="dropdown-item" href="#">
+                      <a
+                        className="dropdown-item"
+                        href="#"
+                        onClick={(e) => changeStatus(e, -1, transaction)}
+                      >
                         <i className="fa fa-ban" /> &nbsp; Hủy
                       </a>
                       <div className="dropdown-divider" />
-                      <a className="dropdown-item" href="#">
+                      <a
+                        className="dropdown-item"
+                        href="#"
+                        onClick={(e) => removeTransaction(e, transaction.id)}
+                      >
                         <i className="fas fa-trash-alt" /> &nbsp; Xóa
                       </a>
                     </div>
@@ -91,7 +182,7 @@ function TransactionList({ transactions }) {
           <div className="modal-content">
             <div className="modal-header">
               <h4 className="modal-title">
-                Orders # <b className="transaction-id">15</b>
+                Orders # <b className="transaction-id">{transactionId}</b>
               </h4>
               <button
                 type="button"
@@ -115,20 +206,42 @@ function TransactionList({ transactions }) {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>
-                      <a target="_blank" href="#">
-                        Crown Summit Backpack 1
-                      </a>
-                    </td>
-                    <td>
-                      <img width="100px" src="#" alt="" />
-                    </td>
-                    <td>7.830.000đ</td>
-                    <td>1</td>
-                    <td>7.830.000đ</td>
-                  </tr>
+                  {listOrderByTransactionId.map((order, index) => (
+                    <tr key={index}>
+                      <td>{index + 1}</td>
+                      <td>
+                        <Link target="_blank" to="/">
+                          {order.name}
+                        </Link>
+                      </td>
+                      <td>
+                        <img
+                          width="100px"
+                          src={order ? order.image : ""}
+                          width="80px"
+                          alt=""
+                        />
+                      </td>
+                      <td>
+                        $
+                        {order.discount > 0
+                          ? ((100 - order.discount) / 100) * order.price
+                          : order.price}
+                      </td>
+                      <td>{order.quantity}</td>
+                      <td>
+                        $
+                        {
+                          (totalTransaction +=
+                            order.discount > 0
+                              ? ((100 - order.discount) / 100) *
+                                order.price *
+                                order.quantity
+                              : order.price * order.quantity)
+                        }
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
@@ -138,10 +251,10 @@ function TransactionList({ transactions }) {
                 className="btn btn-danger"
                 data-dismiss="modal"
               >
-                Đóng
+                Closed
               </button>
               <p>
-                Thành tiền: <span id="md-total-order">15.660.000 đ</span>
+                Total: <span id="md-total-order">${totalTransaction}</span>
               </p>
             </div>
           </div>
@@ -151,6 +264,16 @@ function TransactionList({ transactions }) {
   );
 }
 
-TransactionList.propTypes = {};
+TransactionList.propTypes = {
+  onHandleStatus: PropTypes.func,
+  transactions: PropTypes.array,
+  onHandleRemoveTransaction: PropTypes.func,
+};
+
+TransactionList.defaultProps = {
+  onHandleStatus: null,
+  transactions: [],
+  onHandleRemoveTransaction: [],
+};
 
 export default TransactionList;
