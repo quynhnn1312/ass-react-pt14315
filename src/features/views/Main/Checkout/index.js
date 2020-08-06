@@ -37,6 +37,7 @@ function Checkout() {
     data.created_at = dateTime;
     data.updated_at = dateTime;
     data.total = totalCart;
+    data.status = 0;
     dispatch(apiAddTransaction(data))
     setTimeout(()=>{
       dispatch(resetCart([]))

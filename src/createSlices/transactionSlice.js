@@ -45,6 +45,34 @@ export const apiAddTransaction = createAsyncThunk(
   }
 )
 
+export const apiUpdateTransaction = createAsyncThunk(
+  "transactions/fetchUpdateTransactionStatus",
+  async (requestTransaction) => {
+    try {
+      const responseUpdateTransaction = await transactionApi.put(
+        requestTransaction.id,
+        requestTransaction
+      );
+      return responseUpdateTransaction;
+    } catch (error) {
+      console.log("Failed to fetch transaction list: ", error);
+    }
+  }
+);
+
+export const apiDeleteTransaction = createAsyncThunk(
+  "transactions/fetchDeleteTransactionStatus",
+  async (id) => {
+    try {
+      const responseTransactionFindId = await transactionApi.get(id);
+      await transactionApi.delete(id);
+      return responseTransactionFindId;
+    } catch (error) {
+      console.log("Failed to fetch transaction list: ", error);
+    }
+  }
+);
+
 const transaction = createSlice({
   name: "transactions",
   initialState: [],
@@ -55,7 +83,21 @@ const transaction = createSlice({
     },
     [apiAddTransaction.fulfilled]: (state, action) => {
       state.push(action.payload);
-    }
+    },
+    [apiUpdateTransaction.fulfilled]: (state, action) => {
+      const newTransaction = action.payload;
+      const TransactionIndex = state.findIndex(
+        (transaction) => transaction.id === newTransaction.id
+      );
+
+      if (TransactionIndex >= 0) {
+        state[TransactionIndex] = newTransaction;
+      }
+    },
+    [apiDeleteTransaction.fulfilled]: (state, action) => {
+      const removeTransactionId = action.payload.id;
+      return state.filter((transaction) => transaction.id !== removeTransactionId);
+    },
   },
 });
 
