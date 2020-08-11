@@ -5,11 +5,11 @@ import BlogList from "../../components/BlogList";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2/dist/sweetalert2.js";
-// import {
-//   apiBlogList,
-//   selectBlog,
-//   apiDeleteBlog,
-// } from "../../../../../../createSlices/blogSlice";
+import {
+  apiBlogList,
+  selectBlog,
+  apiDeleteBlog,
+} from "../../../../../../createSlices/blogSlice";
 import Pagination from "react-js-pagination";
 import ShowPerPage from "../../components/ShowPerPage";
 import BlogSearch from "../../components/BlogSearch";
@@ -20,22 +20,22 @@ function Main(props) {
   const [searchData, setSearchData] = useState();
   const history = useHistory();
   const dispatch = useDispatch();
-  // const categories = useSelector(selectCategory);
-  // useEffect(() => {
-  //   dispatch(apiCategoryList());
-  // }, []);
-  // const onCategoryRemoveClick = (category) => {
-  //   dispatch(apiDeleteCategory(category.id));
-  //   Swal.fire({
-  //     icon: "success",
-  //     title: "Đã xóa",
-  //     showConfirmButton: false,
-  //     timer: 1000,
-  //   });
-  // };
-  const onCategoryUpdateClick = (category) => {
-    const editCategoryUrl = `categories/${category.id}`;
-    history.push(editCategoryUrl);
+  const blogs = useSelector(selectBlog);
+  useEffect(() => {
+    dispatch(apiBlogList());
+  }, []);
+  const onBlogRemoveClick = (blog) => {
+    dispatch(apiDeleteBlog(blog.id));
+    Swal.fire({
+      icon: "success",
+      title: "Đã xóa",
+      showConfirmButton: false,
+      timer: 1000,
+    });
+  };
+  const onBlogUpdateClick = (blog) => {
+    const editBlogUrl = `blogs/${blog.id}`;
+    history.push(editBlogUrl);
   };
   const handlePageChange = (pageNumber) => {
     setActivePage(pageNumber);
@@ -43,18 +43,18 @@ function Main(props) {
   const onHandlePerPage = (value) => {
     setPerPage(+value);
   };
-  const indexOfLastCategory = activePage * perPage;
-  const indexOfFirstCategory = indexOfLastCategory - perPage;
-  // const categoryData = categories.slice(
-  //   indexOfFirstCategory,
-  //   indexOfLastCategory
-  // );
+  const indexOfLastBlog = activePage * perPage;
+  const indexOfFirstBlog = indexOfLastBlog - perPage;
+  const blogData = blogs.slice(
+    indexOfFirstBlog,
+    indexOfLastBlog
+  );
   const onSubmitSearch = (keyword) => {
-    // const result = categories.filter(
-    //   (category) =>
-    //     category.name.toLowerCase().indexOf(keyword.toLowerCase()) !== -1
-    // );
-    // keyword == "" ? setSearchData(0) : setSearchData(result);
+    const result = blogs.filter(
+      (blog) =>
+        blog.title.toLowerCase().indexOf(keyword.toLowerCase()) !== -1
+    );
+    keyword == "" ? setSearchData(0) : setSearchData(result);
   };
   return (
     <div className="container-fluid">
@@ -92,9 +92,9 @@ function Main(props) {
               <div className="row">
                 <div className="col-sm-12">
                   <BlogList
-                    // categories={searchData ? searchData : categoryData}
-                    // onCategoryRemoveClick={onCategoryRemoveClick}
-                    // onCategoryUpdateClick={onCategoryUpdateClick}
+                    blogs={searchData ? searchData : blogData}
+                    onBlogRemoveClick={onBlogRemoveClick}
+                    onBlogUpdateClick={onBlogUpdateClick}
                   />
                 </div>
               </div>
@@ -106,7 +106,7 @@ function Main(props) {
                     role="status"
                     aria-live="polite"
                   >
-                    {/* Showing 1 to {perPage} of {categories.length} entries */}
+                    Showing 1 to {perPage} of {blogs.length} entries
                   </div>
                 </div>
                 <div className="col-sm-12 col-md-7">
@@ -120,8 +120,8 @@ function Main(props) {
                       hideFirstLastPages
                       activePage={activePage}
                       itemsCountPerPage={perPage}
-                      totalItemsCount={450
-                        // searchData ? searchData.length : categories.length
+                      totalItemsCount={
+                        searchData ? searchData.length : blogs.length
                       }
                       pageRangeDisplayed={5}
                       itemClass="page-item"

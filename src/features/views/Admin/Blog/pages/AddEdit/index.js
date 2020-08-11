@@ -4,45 +4,45 @@ import PropTypes from "prop-types";
 import BlogForm from "../../components/BlogForm";
 import { useHistory, useParams } from "react-router-dom";
 import {
-  apiUpdateCategory,
-  apiAddCategory,
-  selectCategory,
-  apiCategoryList,
-} from "../../../../../../createSlices/categorySlice";
+  apiBlogList,
+  selectBlog,
+  apiUpdateBlog,
+  apiAddBlog
+} from "../../../../../../createSlices/blogSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 function AddEdit(props) {
   const dispatch = useDispatch();
-  const categories = useSelector(selectCategory);
-  const { categoryId } = useParams();
-  const isAddMode = !categoryId;
+  const blogs = useSelector(selectBlog);
+  const { blogId } = useParams();
+  const isAddMode = !blogId;
   const history = useHistory();
   const handleSubmit = (value) => {
     if (isAddMode) {
-      dispatch(apiAddCategory(value));
+      dispatch(apiAddBlog(value));
     } else {
-      value.id = categoryId;
-      dispatch(apiUpdateCategory(value));
+      value.id = blogId;
+      dispatch(apiUpdateBlog(value));
     }
     setTimeout(() => {
-      history.push("/admin/categories");
+      history.push("/admin/blogs");
     }, 1000);
   };
   useEffect(() => {
-    dispatch(apiCategoryList());
+    dispatch(apiBlogList());
   }, []);
-  const initialValuesEdit = categories.find((x) => x.id === categoryId);
+  const initialValuesEdit = blogs.find((x) => x.id === blogId);
   return (
     <div className="container-fluid">
       {/* Page Heading */}
       <h1 className="h3 mb-2 text-gray-800">
-        {isAddMode ? "Add" : "Update"} category
+        {isAddMode ? "Add" : "Update"} blog
       </h1>
       {/* DataTales Example */}
       <div className="card shadow mb-4">
         <div className="card-header py-3 d-flex justify-content-between">
           <h6 className="m-auto font-weight-bold text-primary pull-left">
-            {isAddMode ? "Add" : "Update"} category
+            {isAddMode ? "Add" : "Update"} blog
           </h6>
         </div>
         <BlogForm

@@ -4,6 +4,7 @@ import categoryReducer from "../createSlices/categorySlice";
 import cartReducer from "../createSlices/cartSlice";
 import transactionReducer from "../createSlices/transactionSlice";
 import orderReducer from "../createSlices/orderSlice";
+import blogReducer from "../createSlices/blogSlice";
 
 const rootReducer = {
   products: productReducer,
@@ -11,6 +12,7 @@ const rootReducer = {
   carts: cartReducer,
   transactions: transactionReducer,
   orders: orderReducer,
+  blogs: blogReducer,
 };
 
 const store = configureStore({
