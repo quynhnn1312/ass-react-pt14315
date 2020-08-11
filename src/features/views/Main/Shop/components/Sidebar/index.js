@@ -12,25 +12,29 @@ function Sidebar(props) {
       <div className="sidebar-widget list-categories-widget">
         <h2 className="widgettitle">Shop</h2>
         <div className="cat-accordion">
-          {categories.map((category, index) => (
-            <div key={index} className="card">
-              <div className="card-header" id="headingOne">
-                <h5 className="mb-0">
-                  <Link to={`/shop/${category.id}`}>
-                    <button
-                      type="button"
-                      data-toggle="collapse"
-                      data-target="#collapseOne"
-                      aria-expanded="false"
-                      aria-controls="collapseOne"
-                    >
-                      {category.name}
-                    </button>
-                  </Link>
-                </h5>
+          {categories.map((category, index) =>
+            category.id != 1 ? (
+              <div key={index} className="card">
+                <div className="card-header" id="headingOne">
+                  <h5 className="mb-0">
+                    <Link to={`/shop/${category.id}`}>
+                      <button
+                        type="button"
+                        data-toggle="collapse"
+                        data-target="#collapseOne"
+                        aria-expanded="false"
+                        aria-controls="collapseOne"
+                      >
+                        {category.name}
+                      </button>
+                    </Link>
+                  </h5>
+                </div>
               </div>
-            </div>
-          ))}
+            ) : (
+              ""
+            )
+          )}
         </div>
       </div>
       <div className="sidebar-widget list-widget">

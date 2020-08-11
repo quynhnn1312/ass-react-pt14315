@@ -1,23 +1,33 @@
 {
   "categories": [
     {
+      "name": "Uncategory",
+      "status": true,
+      "id": "1"
+    },
+    {
       "name": "Hayes, Auer and Bailey",
       "status": true,
       "id": "3"
+    },
+    {
+      "name": "sản phẩm nam",
+      "status": true,
+      "id": "ur_GrpZ"
     }
   ],
   "products": [
     {
-      "id": "9",
-      "categoryId": "3",
       "name": "Handmade Rubber Mouse",
-      "avatar": "https://s3.amazonaws.com/uifaces/faces/twitter/hai_ninh_nguyen/128.jpg",
       "price": "327.00",
-      "discount": 97,
-      "amount": 18,
+      "discount": "97",
+      "amount": "18",
       "short_description": "short_description 9",
       "detail": "detail 9",
-      "status": false
+      "avatar": "https://s3.amazonaws.com/uifaces/faces/twitter/hai_ninh_nguyen/128.jpg",
+      "categoryId": "ur_GrpZ",
+      "status": true,
+      "id": "9"
     },
     {
       "id": "14",
@@ -114,6 +124,36 @@
       "categoryId": "3",
       "status": true,
       "id": "26"
+    },
+    {
+      "name": "Nghiêm Ngọc Quỳnh",
+      "price": "100000",
+      "discount": "10",
+      "amount": "12",
+      "short_description": "sdjkc ",
+      "avatar": "https://firebasestorage.googleapis.com/v0/b/react-pt14315-2020.appspot.com/o/images%2Fproduct-1.jpg?alt=media&token=83a35313-a8af-4c17-a011-86130e5b4606",
+      "categoryId": "3",
+      "status": true,
+      "detail": "<p>sdjk asc</p>",
+      "galllery": [
+        "https://firebasestorage.googleapis.com/v0/b/react-pt14315-2020.appspot.com/o/galllerys%2Fproduct-4.jpg?alt=media&token=98ad8c28-26ad-4467-9b88-72efc621acc0",
+        "https://firebasestorage.googleapis.com/v0/b/react-pt14315-2020.appspot.com/o/galllerys%2Fproduct-1.jpg?alt=media&token=2bbc629d-5dbb-4c68-a5c7-edd1eeb85a66",
+        "https://firebasestorage.googleapis.com/v0/b/react-pt14315-2020.appspot.com/o/galllerys%2Fproduct-5.jpg?alt=media&token=257bb259-47c7-4530-a86a-bd0edc4a41e1",
+        "https://firebasestorage.googleapis.com/v0/b/react-pt14315-2020.appspot.com/o/galllerys%2Fproduct-3.jpg?alt=media&token=2ca8664b-d3f3-49f4-ba54-7f2d00ddd87d",
+        "https://firebasestorage.googleapis.com/v0/b/react-pt14315-2020.appspot.com/o/galllerys%2Fproduct-2.jpg?alt=media&token=c0dd154d-8422-46d7-a81c-3ba50fb2226c"
+      ],
+      "id": "LDk_eB3"
+    }
+  ],
+  "blogs": [
+    {
+      "id": "1",
+      "title": "When an unknown printer took a galley of type.",
+      "avatar": "https://www.chhajedgarden.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/r/o/rose001.jpg",
+      "short_description": "Distinctively simplify dynamic resources whereas prospective core competencies. Objectively pursue multidisciplinary human capital for ",
+      "detail": "Distinctively simplify dynamic resources whereas prospective core competencies. Objectively pursue multidisciplinary human capital for ",
+      "created_at": "2020-08-06 05:41:41",
+      "status": true
     }
   ],
   "transactions": [
@@ -126,7 +166,7 @@
       "created_at": "2020-08-06 05:41:54",
       "updated_at": "2020-08-06 05:41:54",
       "total": 253.92,
-      "status": 0,
+      "status": 2,
       "id": 1
     },
     {

@@ -243,11 +243,15 @@ function Header(props) {
                   <i className="fa fa-angle-down"></i>
                 </NavLink>
                 <ul>
-                  {categories.map((category, index) => (
-                    <li key={index}>
-                      <Link to={`/shop/${category.id}`}>{category.name}</Link>
-                    </li>
-                  ))}
+                  {categories.map((category, index) =>
+                    category.id != 1 ? (
+                      <li key={index}>
+                        <Link to={`/shop/${category.id}`}>{category.name}</Link>
+                      </li>
+                    ) : (
+                      ""
+                    )
+                  )}
                 </ul>
               </li>
               <li>

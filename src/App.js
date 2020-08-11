@@ -26,6 +26,7 @@ const Home = React.lazy(() => import("./features/views/Main/Home"));
 const Shop = React.lazy(() => import("./features/views/Main/Shop"));
 const Cart = React.lazy(() => import("./features/views/Main/Cart"));
 const Blog = React.lazy(() => import("./features/views/Main/Blog"));
+const BlogDetail = React.lazy(() => import("./features/views/Main/BlogDetail"));
 const About = React.lazy(() => import("./features/views/Main/About"));
 const Contact = React.lazy(() => import("./features/views/Main/Contact"));
 const Register = React.lazy(() => import("./features/views/Main/Register"));
@@ -76,6 +77,7 @@ function App() {
                   <Route path="/shop/:idCate/single-product/:idPro" component={SingleProduct} />
                   <Route path="/carts" component={Cart} />
                   <Route path="/blogs" component={Blog} />
+                  <Route path="/blog/:id" component={BlogDetail} />
                   <Route path="/about" component={About} />
                   <Route path="/contact" component={Contact} />
                   <Route path="/register" component={Register} />
