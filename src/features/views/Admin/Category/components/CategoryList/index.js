@@ -74,7 +74,7 @@ function CategoryList(props) {
                 </button>
               </td>
             ) : (
-              ""
+              <td></td>
             )}
           </tr>
         ))}

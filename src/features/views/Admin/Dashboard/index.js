@@ -1,7 +1,22 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from "react";
+import React, {useEffect} from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { apiProductList, selectProduct } from "../../../../createSlices/productSlice";
+import { apiBlogList, selectBlog } from "../../../../createSlices/blogSlice";
+import { apiTransactionList, selectTransaction } from "../../../../createSlices/transactionSlice";
 
-function Dashboard(props) {
+function Dashboard() {
+  const dispatch = useDispatch();
+  const products = useSelector(selectProduct);
+  const blogs = useSelector(selectBlog);
+  const transactions = useSelector(selectTransaction);
+
+  useEffect(() => {
+    dispatch(apiProductList());
+    dispatch(apiBlogList());
+    dispatch(apiTransactionList());
+  }, [])
+
   return (
     <div className="container-fluid">
       <div className="d-sm-flex align-items-center justify-content-between mb-4">
@@ -20,14 +35,14 @@ function Dashboard(props) {
               <div className="row no-gutters align-items-center">
                 <div className="col mr-2">
                   <div className="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                    Earnings (Monthly)
+                    Products
                   </div>
                   <div className="h5 mb-0 font-weight-bold text-gray-800">
-                    $40,000
+                    { products.length }
                   </div>
                 </div>
                 <div className="col-auto">
-                  <i className="fa fa-calendar fa-2x text-gray-300" />
+                  <i className="fa fa fa-product-hunt fa-2x text-gray-300" />
                 </div>
               </div>
             </div>
@@ -39,14 +54,14 @@ function Dashboard(props) {
               <div className="row no-gutters align-items-center">
                 <div className="col mr-2">
                   <div className="text-xs font-weight-bold text-success text-uppercase mb-1">
-                    Earnings (Annual)
+                    Blogs
                   </div>
                   <div className="h5 mb-0 font-weight-bold text-gray-800">
-                    $215,000
+                  { blogs.length }
                   </div>
                 </div>
                 <div className="col-auto">
-                  <i className="fa fa-dollar fa-2x text-gray-300" />
+                  <i className="fa fa-fw fa-table fa-2x text-gray-300" />
                 </div>
               </div>
             </div>
@@ -58,30 +73,18 @@ function Dashboard(props) {
               <div className="row no-gutters align-items-center">
                 <div className="col mr-2">
                   <div className="text-xs font-weight-bold text-info text-uppercase mb-1">
-                    Tasks
+                    Transactions
                   </div>
                   <div className="row no-gutters align-items-center">
                     <div className="col-auto">
                       <div className="h5 mb-0 mr-3 font-weight-bold text-gray-800">
-                        50%
-                      </div>
-                    </div>
-                    <div className="col">
-                      <div className="progress progress-sm mr-2">
-                        <div
-                          className="progress-bar bg-info"
-                          role="progressbar"
-                          style={{ width: "50%" }}
-                          aria-valuenow={50}
-                          aria-valuemin={0}
-                          aria-valuemax={100}
-                        />
+                        { transactions.length }
                       </div>
                     </div>
                   </div>
                 </div>
                 <div className="col-auto">
-                  <i className="fa fa-list-alt fa-2x text-gray-300" />
+                  <i className="fa fa-shopping-cart fa-2x text-gray-300" />
                 </div>
               </div>
             </div>
@@ -93,14 +96,14 @@ function Dashboard(props) {
               <div className="row no-gutters align-items-center">
                 <div className="col mr-2">
                   <div className="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                    Pending Requests
+                    Money sold
                   </div>
                   <div className="h5 mb-0 font-weight-bold text-gray-800">
                     18
                   </div>
                 </div>
                 <div className="col-auto">
-                  <i className="fa fa-comments fa-2x text-gray-300" />
+                  <i className="fa fa-dollar fa-2x text-gray-300" />
                 </div>
               </div>
             </div>
