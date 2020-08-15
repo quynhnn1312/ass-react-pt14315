@@ -29,16 +29,13 @@ function ProductForm(props) {
   const [value, setValue] = useState();
   const [detail, setDetail] = useState("");
   const [imageUrl, setImageUrl] = useState("");
-  const [gallleryImage, setGallleryImage] = useState([
-    "/admin/img/no_image.jpg",
-  ]);
+  const [gallleryImage, setGallleryImage] = useState();
   const { onHandleSubmit, categories, isAddMode, initialValuesEdit } = props;
   const { register, handleSubmit, errors } = useForm();
   useEffect(() => {
     dispatch(apiProductList());
     register({ name: "detail" });
   }, [gallleryImage]);
-
   const handleChangeImage = (e) => {
     let output = document.getElementById("output");
     if (e.target.files[0]) {
@@ -64,37 +61,40 @@ function ProductForm(props) {
     }
   };
 
-  const handleChangeGalllery = (e) => {
+  const handleChangeGalllery = async (e) => {
     if (e.target.files) {
       const files = e.target.files;
       const arrGalllery = [];
+      const arrFile = [];
       for (let file of files) {
-        const uploadTask = storage.ref(`galllerys/${file.name}`).put(file);
-        uploadTask.on(
-          "state_changed",
-          () => { },
-          (error) => {
-            console.log(error);
-          },
-          () => {
-            storage
-              .ref("galllerys")
-              .child(file.name)
-              .getDownloadURL()
-              .then((url) => {
-                arrGalllery.push(url)
-                setGallleryImage(arrGalllery);
-              });
-          }
-        );
+        arrFile.push(file);
       }
+      await Promise.all(arrFile.map(async(file)=>{
+        storage.ref(`galllerys/${file.name}`).put(file);
+        return storage
+        .ref("galllerys")
+        .child(file.name)
+        .getDownloadURL()
+        .then((url) => {
+          arrGalllery.push(url)
+        });
+      }));
+      setGallleryImage(arrGalllery)
     }
   };
 
   const onSubmit = (data) => {
-    data.galllery = gallleryImage;
+    if (initialValuesEdit.avatar) {
+      imageUrl ? data.avatar = imageUrl : data.avatar = initialValuesEdit.avatar;
+    } else {
+      data.avatar = imageUrl;
+    }
+    if (initialValuesEdit.galllery) {
+      gallleryImage.length > 0 ? data.galllery = gallleryImage : data.galllery = initialValuesEdit.galllery;
+    } else {
+      data.galllery = gallleryImage;
+    }
     data.detail = detail;
-    data.avatar = imageUrl;
     setIsSubmitting(true);
     if (!onHandleSubmit) return;
     onHandleSubmit(data);
@@ -228,7 +228,6 @@ function ProductForm(props) {
               <textarea
                 className="form-control"
                 rows={2}
-                defaultValue={""}
                 name="short_description"
                 placeholder="Enter short description ..."
                 ref={register}
@@ -238,7 +237,7 @@ function ProductForm(props) {
             <div className="form-group">
               <label htmlFor="detail">Detail:</label>
               <CKEditor
-                data=""
+                data={initialValuesEdit.detail ? initialValuesEdit.detail : ""}
                 editor={ClassicEditor}
                 onInit={(editor) => {
                   editor.editing.view.change((writer) => {
@@ -248,6 +247,8 @@ function ProductForm(props) {
                       editor.editing.view.document.getRoot()
                     );
                   });
+                  const data = editor.getData();
+                  setDetail(data);
                 }}
                 onChange={(event, editor) => {
                   const data = editor.getData();
@@ -281,7 +282,7 @@ function ProductForm(props) {
                 name="avatar"
                 id="input"
                 onChange={handleChangeImage}
-                ref={register({ required: true })}
+                ref={register({ required: initialValuesEdit.avatar ? false : true })}
               />
               {errors.avatar && errors.avatar.type === "required" && (
                 <p className="error-form">
@@ -289,35 +290,45 @@ function ProductForm(props) {
                   required
                 </p>
               )}
-              {errors.avatar && errors.avatar.type === "validate" && (
+              {/* {errors.avatar && errors.avatar.type === "validate" && (
                 <p className="error-form">
                   <i className="fa fa-exclamation-triangle"></i>&nbsp; The image
                   path is malformed
                 </p>
-              )}
+              )} */}
             </div>
             <div className="form-group mt-3 mb-3">
-              { initialValuesEdit.galllery ?
-                initialValuesEdit.galllery.map((item, index) => (
+              {!initialValuesEdit.galllery && !gallleryImage ?
+                (<img
+                  src="/admin/img/no_image.jpg"
+                  className="img img-thumbnail"
+                  width="20%"
+                  alt=""
+                />) : ""
+              }
+              {initialValuesEdit.galllery && !gallleryImage ?
+                (initialValuesEdit.galllery.map((item, index) => (
                   <img
-                  key={index}
-                  src={item}
-                  className="img img-thumbnail"
-                  width="20%"
-                  alt=""
-                  id="output"
-                />
-                )) :
-                gallleryImage.map((galllery, index) => (
-                <img
-                  key={index}
-                  src={galllery}
-                  className="img img-thumbnail"
-                  width="20%"
-                  alt=""
-                  id="output"
-                />
-              ))}
+                    key={index}
+                    src={item}
+                    className="img img-thumbnail"
+                    width="20%"
+                    alt=""
+                  />
+                ))) : ""
+              }
+              { initialValuesEdit.galllery && gallleryImage || !initialValuesEdit.galllery && gallleryImage ?
+                (gallleryImage.map((item, index) => (
+                  <img
+                    key={index}
+                    src={item}
+                    className="img img-thumbnail"
+                    width="20%"
+                    alt=""
+                    id="output"
+                  />
+                ))) : ""
+              }
             </div>
             <div className="form-group">
               <label htmlFor="galllery">Galllery Image:</label>
